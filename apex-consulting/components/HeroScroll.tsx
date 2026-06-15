@@ -1,42 +1,35 @@
 "use client";
 
-/**
- * Hero section using the 21st.dev ContainerScroll component.
- * The 3D card reveals a live dashboard mockup as the user scrolls.
- * Edit headline and sub-headline in content/site.config.ts → HERO
- */
-
 import { ContainerScroll } from "@/components/ui/container-scroll-animation";
 import { motion } from "framer-motion";
 import { ArrowRight, TrendingUp, TrendingDown, Activity, BarChart2 } from "lucide-react";
 import { HERO, COMPANY, LEGAL } from "@/content/site.config";
 
-// ── Mini dashboard rendered inside the 3D card ──────────────────────────────
-const BARS  = [38, 52, 44, 61, 55, 73, 68, 82, 79, 94, 88, 100];
+const BARS   = [38, 52, 44, 61, 55, 73, 68, 82, 79, 94, 88, 100];
 const MONTHS = ["J","F","M","A","M","J","J","A","S","O","N","D"];
 
 const KPI = [
-  { label: "Revenue",    value: "+127%",  up: true  },
-  { label: "Margin",     value: "43.2%",  up: true  },
-  { label: "Burn",       value: "0.47×",  up: false },
-  { label: "CAC Eff.",   value: "+40%",   up: true  },
+  { label: "Revenue",  value: "+127%", up: true  },
+  { label: "Margin",   value: "43.2%", up: true  },
+  { label: "Burn",     value: "0.47×", up: false },
+  { label: "CAC Eff.", value: "+40%",  up: true  },
 ];
 
 const FEED = [
   { dot: "bg-emerald-400", text: "Financial analysis complete — 3 opportunities flagged" },
-  { dot: "bg-gold-400",    text: "Competitor pricing update detected in your sector"       },
-  { dot: "bg-blue-400",    text: "Q3 market research report ready for review"              },
-  { dot: "bg-emerald-400", text: "Cash-flow forecast updated with actuals"                 },
+  { dot: "bg-accent-400",  text: "Competitor pricing update detected in your sector"      },
+  { dot: "bg-blue-400",    text: "Q3 market research report ready for review"             },
+  { dot: "bg-emerald-400", text: "Cash-flow forecast updated with actuals"                },
 ];
 
 function DashboardMockup() {
   return (
-    <div className="h-full w-full bg-[#0C0A09] rounded-xl flex flex-col p-4 md:p-6 gap-4 select-none">
+    <div className="h-full w-full bg-catalyst-base rounded-xl flex flex-col p-4 md:p-6 gap-4 select-none">
       {/* Top bar */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <div className="w-6 h-6 rounded-md bg-gradient-to-br from-yellow-700 to-yellow-400 flex items-center justify-center">
-            <span className="text-[9px] font-black text-black">A</span>
+          <div className="w-6 h-6 rounded-md bg-gradient-to-br from-accent-700 to-accent-400 flex items-center justify-center">
+            <span className="text-[9px] font-black text-catalyst-deep">C</span>
           </div>
           <span className="text-[12px] font-semibold text-white">{COMPANY.brandName} — Client Portal</span>
         </div>
@@ -67,7 +60,6 @@ function DashboardMockup() {
 
       {/* Chart + feed */}
       <div className="flex-1 grid grid-cols-[1fr_180px] md:grid-cols-[1fr_220px] gap-3 min-h-0">
-        {/* Bar chart */}
         <div className="rounded-xl bg-white/[0.02] border border-white/[0.05] p-4 flex flex-col">
           <div className="flex items-center justify-between mb-3">
             <div>
@@ -85,8 +77,8 @@ function DashboardMockup() {
                     height: `${h}%`,
                     background:
                       i === BARS.length - 1
-                        ? "linear-gradient(180deg,#F59E0B,#92400E)"
-                        : `rgba(245,158,11,${0.15 + (i / BARS.length) * 0.4})`,
+                        ? "linear-gradient(180deg,#14B8A6,#0F766E)"
+                        : `rgba(20,184,166,${0.15 + (i / BARS.length) * 0.4})`,
                   }}
                 />
                 <span className="text-[7px] text-stone-700">{MONTHS[i]}</span>
@@ -95,7 +87,6 @@ function DashboardMockup() {
           </div>
         </div>
 
-        {/* Activity feed */}
         <div className="rounded-xl bg-white/[0.02] border border-white/[0.05] p-4 flex flex-col gap-3">
           <div className="flex items-center gap-2 mb-1">
             <Activity size={11} className="text-stone-600" />
@@ -113,21 +104,18 @@ function DashboardMockup() {
   );
 }
 
-// ── Hero title block ─────────────────────────────────────────────────────────
 function TitleBlock() {
   return (
     <div className="space-y-6">
-      {/* Eyebrow */}
       <motion.p
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-        className="text-[11px] font-semibold uppercase tracking-[0.22em] text-yellow-500"
+        className="text-[11px] font-semibold uppercase tracking-[0.22em] text-accent-400"
       >
         {HERO.eyebrow}
       </motion.p>
 
-      {/* Headline */}
       <motion.h1
         initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
@@ -136,12 +124,11 @@ function TitleBlock() {
       >
         {HERO.headlineLines.map((line, i) => (
           <span key={i} className="block">
-            {i === 0 ? <span className="gold-shimmer">{line}</span> : line}
+            {i === 0 ? <span className="accent-shimmer">{line}</span> : line}
           </span>
         ))}
       </motion.h1>
 
-      {/* Sub */}
       <motion.p
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
@@ -151,14 +138,13 @@ function TitleBlock() {
         {HERO.subheadline}
       </motion.p>
 
-      {/* CTAs */}
       <motion.div
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.48, ease: [0.16, 1, 0.3, 1] }}
         className="flex flex-wrap gap-3 justify-center"
       >
-        <a href={LEGAL.bookingUrl} className="btn-gold flex items-center gap-2 text-[14px]">
+        <a href={LEGAL.bookingUrl} className="btn-accent flex items-center gap-2 text-[14px]">
           {HERO.primaryCta} <ArrowRight size={14} />
         </a>
         <a href="#services" className="btn-ghost text-[14px]">
@@ -169,20 +155,14 @@ function TitleBlock() {
   );
 }
 
-// ── Export ───────────────────────────────────────────────────────────────────
 export default function HeroScroll() {
   return (
-    <section className="relative bg-apex-deep overflow-hidden pt-16">
-      {/* Subtle top glow */}
+    <section className="relative bg-catalyst-deep overflow-hidden pt-16">
       <div
         className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[300px] pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(ellipse at top, rgba(180,83,9,0.12) 0%, transparent 70%)",
-        }}
+        style={{ background: "radial-gradient(ellipse at top, rgba(15,118,110,0.1) 0%, transparent 70%)" }}
         aria-hidden
       />
-
       <ContainerScroll titleComponent={<TitleBlock />}>
         <DashboardMockup />
       </ContainerScroll>
