@@ -1,11 +1,5 @@
 "use client";
 
-/**
- * Statistics section.
- * Edit the values in content/site.config.ts → STATS.
- * Any stat with an empty value is hidden automatically.
- */
-
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { STATS } from "@/content/site.config";
@@ -32,7 +26,7 @@ export default function StatsSection() {
     <section id="results" className="relative py-20 border-y border-white/[0.05] overflow-hidden">
       <div
         className="absolute inset-0 pointer-events-none"
-        style={{ background: "radial-gradient(ellipse 80% 60% at 50% 50%, rgba(180,83,9,0.06) 0%, transparent 70%)" }}
+        style={{ background: "radial-gradient(ellipse 80% 60% at 50% 50%, rgba(15,118,110,0.06) 0%, transparent 70%)" }}
         aria-hidden
       />
       <div className="max-w-7xl mx-auto px-6 lg:px-8" ref={ref}>
@@ -45,12 +39,8 @@ export default function StatsSection() {
               transition={{ duration: 0.6, delay: i * 0.1 }}
               className="text-center"
             >
-              <p className="text-[clamp(2.5rem,5vw,4rem)] font-black tracking-tight leading-none gold-shimmer mb-3">
-                {value}
-              </p>
-              <p className="text-[13px] text-stone-500 leading-relaxed max-w-[180px] mx-auto">
-                {label}
-              </p>
+              <p className="text-[clamp(2.5rem,5vw,4rem)] font-black tracking-tight leading-none accent-shimmer mb-3">{value}</p>
+              <p className="text-[13px] text-stone-500 leading-relaxed max-w-[180px] mx-auto">{label}</p>
             </motion.div>
           ))}
         </div>
