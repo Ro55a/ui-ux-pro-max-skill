@@ -1,61 +1,56 @@
 "use client";
 
+/**
+ * Statistics section.
+ * Edit the values in content/site.config.ts → STATS.
+ * Any stat with an empty value is hidden automatically.
+ */
+
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
+import { STATS } from "@/content/site.config";
 
-const STATS = [
-  { value: 340,  suffix: "%", label: "Average revenue growth within 12 months",    prefix: "+" },
-  { value: 127,  suffix: "+", label: "Startups and SMEs advised across Europe",     prefix: ""  },
-  { value: 30,   suffix: "d", label: "Time to first measurable result",              prefix: ""  },
-  { value: 4.9,  suffix: "",  label: "Average client satisfaction score out of 5",  prefix: ""  },
-];
-
-function CountUp({ target, prefix, suffix, trigger }: { target:number; prefix:string; suffix:string; trigger:boolean }) {
-  const [count, setCount] = useState(0);
-  const rafRef = useRef<number>(0);
-  useEffect(() => {
-    if (!trigger) return;
-    const start    = performance.now();
-    const duration = 2200;
-    const isDecimal = !Number.isInteger(target);
-    const tick = (now: number) => {
-      const elapsed  = now - start;
-      const progress = Math.min(elapsed / duration, 1);
-      const eased    = 1 - Math.pow(1 - progress, 3);
-      const current  = isDecimal ? parseFloat((eased * target).toFixed(1)) : Math.round(eased * target);
-      setCount(current);
-      if (progress < 1) rafRef.current = requestAnimationFrame(tick);
-    };
-    rafRef.current = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(rafRef.current);
-  }, [trigger, target]);
-  return <span>{prefix}{count}{suffix}</span>;
-}
+const visibleStats = STATS.filter((s) => s.value && s.label);
 
 export default function StatsSection() {
-  const [triggered, setTriggered] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  const [triggered, setTriggered] = useState(false);
+
   useEffect(() => {
-    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setTriggered(true); obs.disconnect(); } }, { threshold: 0.3 });
+    if (visibleStats.length === 0) return;
+    const obs = new IntersectionObserver(
+      ([e]) => { if (e.isIntersecting) { setTriggered(true); obs.disconnect(); } },
+      { threshold: 0.3 },
+    );
     if (ref.current) obs.observe(ref.current);
     return () => obs.disconnect();
   }, []);
+
+  if (visibleStats.length === 0) return null;
+
   return (
-    <section id="results" className="relative py-24 overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-r from-gold-900/20 via-gold-800/10 to-gold-900/20" aria-hidden />
-      <div className="absolute inset-0 border-y border-white/[0.05]" aria-hidden />
+    <section id="results" className="relative py-20 border-y border-white/[0.05] overflow-hidden">
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{ background: "radial-gradient(ellipse 80% 60% at 50% 50%, rgba(180,83,9,0.06) 0%, transparent 70%)" }}
+        aria-hidden
+      />
       <div className="max-w-7xl mx-auto px-6 lg:px-8" ref={ref}>
-        <motion.div initial={{ opacity:0,y:20 }} whileInView={{ opacity:1,y:0 }} viewport={{ once:true }} transition={{ duration:0.6 }} className="text-center mb-16">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-gold-400 mb-4">By the Numbers</p>
-          <h2 className="text-[clamp(1.8rem,4vw,3rem)] font-black tracking-[-0.03em] text-white">The evidence speaks for itself.</h2>
-        </motion.div>
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
-          {STATS.map(({ value, suffix, label, prefix }, i) => (
-            <motion.div key={label} initial={{ opacity:0,y:30 }} whileInView={{ opacity:1,y:0 }} viewport={{ once:true }} transition={{ duration:0.6, delay:i*0.1 }} className="text-center">
-              <div className="text-[clamp(3rem,6vw,5rem)] font-black tracking-tight leading-none gold-shimmer mb-3">
-                <CountUp target={value} prefix={prefix} suffix={suffix} trigger={triggered} />
-              </div>
-              <p className="text-[13px] text-stone-500 leading-relaxed max-w-[160px] mx-auto">{label}</p>
+        <div className={`grid gap-12 ${ visibleStats.length === 4 ? "grid-cols-2 lg:grid-cols-4" : visibleStats.length === 3 ? "grid-cols-1 sm:grid-cols-3" : "grid-cols-2" }`}>
+          {visibleStats.map(({ value, label }, i) => (
+            <motion.div
+              key={label}
+              initial={{ opacity: 0, y: 20 }}
+              animate={triggered ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: i * 0.1 }}
+              className="text-center"
+            >
+              <p className="text-[clamp(2.5rem,5vw,4rem)] font-black tracking-tight leading-none gold-shimmer mb-3">
+                {value}
+              </p>
+              <p className="text-[13px] text-stone-500 leading-relaxed max-w-[180px] mx-auto">
+                {label}
+              </p>
             </motion.div>
           ))}
         </div>
