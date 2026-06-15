@@ -1,5 +1,5 @@
 import Navigation           from "@/components/Navigation";
-import ScrollVideo          from "@/components/ScrollVideo";
+import HeroScroll          from "@/components/HeroScroll";
 import ServicesSection      from "@/components/ServicesSection";
 import FinancialAnalyzer    from "@/components/FinancialAnalyzer";
 import MarketResearch       from "@/components/MarketResearch";
@@ -13,7 +13,7 @@ export default function Home() {
   return (
     <main className="bg-apex-deep min-h-screen">
       <Navigation />
-      <ScrollVideo />
+      <HeroScroll />
       <ServicesSection />
       <StatsSection />
       <FinancialAnalyzer />
