@@ -1,0 +1,139 @@
+"use client";
+
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Search, Loader2, Building2, Globe, TrendingUp, AlertTriangle, CheckCircle, ArrowRight } from "lucide-react";
+
+interface BusinessProfile {
+  company: string; industry: string; employees: string; founded: string;
+  estimatedRev: string; fundingStage: string; website: string;
+  painPoints: string[]; opportunities: string[]; score: number; priority: string;
+}
+
+const MOCK: BusinessProfile = {
+  company:"Acme Digital Ltd", industry:"SaaS / B2B Software", employees:"45–90", founded:"2019",
+  estimatedRev:"£1.2M – £3.4M ARR", fundingStage:"Seed / Pre-Series A", website:"acmedigital.co.uk",
+  painPoints:[
+    "No dedicated CFO — financial decisions made without unit-economics visibility",
+    "CAC increasing 22% QoQ with no clear attribution model",
+    "Churn rate 6.8% vs SaaS benchmark 4.5% — retention lever untapped",
+    "Headcount doubled in 12 months, no OKR or productivity framework in place",
+  ],
+  opportunities:[
+    "CFO-as-a-service engagement — immediate runway clarity",
+    "Marketing attribution audit — potential 30–40% reduction in wasted spend",
+    "Retention programme design — 1pp churn reduction ≈ £120K ARR impact",
+    "OKR implementation to align 90-person org with growth targets",
+  ],
+  score:87, priority:"High",
+};
+
+export default function BusinessIntelligence() {
+  const [query,   setQuery]   = useState("");
+  const [loading, setLoading] = useState(false);
+  const [profile, setProfile] = useState<BusinessProfile|null>(null);
+
+  const runAnalysis = async () => {
+    if (!query.trim()) return;
+    setLoading(true); setProfile(null);
+    await new Promise((r) => setTimeout(r, 2200));
+    setProfile({ ...MOCK, company: query });
+    setLoading(false);
+  };
+
+  return (
+    <section className="relative py-32 overflow-hidden">
+      <div className="glow-blob w-[600px] h-[400px] bg-gold-600/6 top-0 left-0 -translate-x-1/3" aria-hidden />
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        <motion.div initial={{ opacity:0,y:30 }} whileInView={{ opacity:1,y:0 }} viewport={{ once:true }} transition={{ duration:0.7,ease:[0.16,1,0.3,1] }} className="max-w-2xl mb-16">
+          <div className="section-divider" />
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-gold-400 mb-4">Pre-Call Intelligence</p>
+          <h2 className="text-[clamp(2rem,5vw,3.5rem)] font-black tracking-[-0.035em] text-white mb-6 leading-[1.05]">
+            Profile any business before <span className="gold-shimmer">you make the call.</span>
+          </h2>
+          <p className="text-stone-400 text-lg leading-relaxed">Enter a company name or domain. We surface their likely pain points, growth stage, and the exact services they need — before you dial.</p>
+        </motion.div>
+
+        <motion.div initial={{ opacity:0,y:20 }} whileInView={{ opacity:1,y:0 }} viewport={{ once:true }} transition={{ duration:0.6 }} className="max-w-2xl mb-10">
+          <div className="flex gap-3">
+            <div className="flex-1 flex items-center gap-3 glass-card px-4 py-3 !rounded-xl border border-white/10 focus-within:border-gold-500/30 transition-colors">
+              <Search size={16} className="text-stone-500 shrink-0" />
+              <input type="text" value={query} onChange={(e)=>setQuery(e.target.value)} onKeyDown={(e)=>e.key==="Enter"&&runAnalysis()} placeholder="Company name or website (e.g. Acme Digital)" className="bg-transparent flex-1 text-[14px] text-white placeholder:text-stone-600 outline-none" />
+            </div>
+            <button onClick={runAnalysis} disabled={loading} className="btn-gold flex items-center gap-2 text-[14px] whitespace-nowrap cursor-pointer disabled:opacity-60">
+              {loading ? <Loader2 size={14} className="animate-spin" /> : <Search size={14} />} Analyse
+            </button>
+          </div>
+          <p className="text-[11px] text-stone-600 mt-2 ml-1">Demo mode: any search returns a synthesised profile. Live version connects to Companies House, LinkedIn, and web sources.</p>
+        </motion.div>
+
+        <AnimatePresence>
+          {profile && (
+            <motion.div initial={{ opacity:0,y:30 }} animate={{ opacity:1,y:0 }} exit={{ opacity:0,y:-20 }} transition={{ duration:0.6,ease:[0.16,1,0.3,1] }} className="grid lg:grid-cols-3 gap-5">
+              <div className="glass-card p-6">
+                <div className="flex items-start gap-4 mb-6">
+                  <div className="w-12 h-12 rounded-xl bg-gold-500/10 border border-gold-500/15 flex items-center justify-center"><Building2 size={20} className="text-gold-400" /></div>
+                  <div><h3 className="font-bold text-white text-[16px]">{profile.company}</h3><p className="text-[12px] text-stone-500">{profile.industry}</p></div>
+                </div>
+                <div className="space-y-3">
+                  {[{label:"Employees",value:profile.employees},{label:"Founded",value:profile.founded},{label:"Est. Revenue",value:profile.estimatedRev},{label:"Funding Stage",value:profile.fundingStage}].map(({label,value})=>(
+                    <div key={label} className="flex justify-between items-center py-2 border-b border-white/[0.04] last:border-0"><span className="text-[12px] text-stone-500">{label}</span><span className="text-[12px] font-medium text-white">{value}</span></div>
+                  ))}
+                </div>
+                <div className="mt-6 p-4 rounded-xl bg-gold-500/8 border border-gold-500/15">
+                  <div className="flex items-center justify-between mb-2"><span className="text-[12px] font-semibold text-gold-400">Opportunity Score</span><span className="text-lg font-black text-gold-400">{profile.score}/100</span></div>
+                  <div className="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
+                    <motion.div initial={{ width:0 }} animate={{ width:`${profile.score}%` }} transition={{ duration:1,delay:0.4,ease:[0.16,1,0.3,1] }} className="h-full bg-gradient-to-r from-gold-700 to-gold-400 rounded-full" />
+                  </div>
+                  <p className="text-[11px] text-stone-500 mt-2">Priority: <span className="text-emerald-400 font-semibold">{profile.priority}</span></p>
+                </div>
+              </div>
+
+              <div className="glass-card p-6">
+                <div className="flex items-center gap-2 mb-5"><AlertTriangle size={14} className="text-amber-400" /><p className="text-[11px] font-semibold uppercase tracking-widest text-amber-400">Identified Pain Points</p></div>
+                <div className="space-y-3">
+                  {profile.painPoints.map((p,i)=>(
+                    <motion.div key={p} initial={{ opacity:0,x:-10 }} animate={{ opacity:1,x:0 }} transition={{ delay:i*0.1+0.3 }} className="flex gap-3 p-3 rounded-xl bg-amber-500/5 border border-amber-500/10">
+                      <span className="text-amber-400 text-[11px] font-bold mt-0.5 shrink-0">{String(i+1).padStart(2,"0")}</span>
+                      <span className="text-[12px] text-stone-400 leading-relaxed">{p}</span>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="glass-card p-6">
+                <div className="flex items-center gap-2 mb-5"><CheckCircle size={14} className="text-emerald-400" /><p className="text-[11px] font-semibold uppercase tracking-widest text-emerald-400">Apex Opportunities</p></div>
+                <div className="space-y-3">
+                  {profile.opportunities.map((o,i)=>(
+                    <motion.div key={o} initial={{ opacity:0,x:10 }} animate={{ opacity:1,x:0 }} transition={{ delay:i*0.1+0.3 }} className="flex gap-3 p-3 rounded-xl bg-emerald-500/5 border border-emerald-500/10">
+                      <TrendingUp size={12} className="text-emerald-400 mt-0.5 shrink-0" />
+                      <span className="text-[12px] text-stone-400 leading-relaxed">{o}</span>
+                    </motion.div>
+                  ))}
+                </div>
+                <a href="#contact" className="mt-5 flex items-center justify-between w-full p-3 rounded-xl bg-gold-500/8 border border-gold-500/15 hover:bg-gold-500/15 transition-colors cursor-pointer">
+                  <span className="text-[12px] font-semibold text-gold-400">Use this profile for outreach</span>
+                  <ArrowRight size={12} className="text-gold-500" />
+                </a>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {!profile && !loading && (
+          <div className="glass-card p-12 text-center max-w-xl mx-auto">
+            <Globe size={36} className="text-stone-700 mx-auto mb-4" />
+            <p className="text-stone-500 text-[14px]">Enter a company name above to generate a pre-call intelligence profile.</p>
+          </div>
+        )}
+        {loading && (
+          <div className="glass-card p-12 text-center max-w-xl mx-auto">
+            <Loader2 size={32} className="text-gold-400 animate-spin mx-auto mb-4" />
+            <p className="text-white font-semibold mb-2">Running intelligence scan…</p>
+            <p className="text-stone-500 text-[13px]">Analysing company signals, funding data, and growth indicators</p>
+          </div>
+        )}
+      </div>
+    </section>
+  );
+}
