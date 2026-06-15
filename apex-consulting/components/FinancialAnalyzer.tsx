@@ -55,13 +55,13 @@ export default function FinancialAnalyzer() {
 
   return (
     <section id="analytics" className="relative py-32 overflow-hidden">
-      <div className="glow-blob w-[500px] h-[500px] bg-gold-600/8 bottom-0 right-0 translate-x-1/3" aria-hidden />
+      <div className="glow-blob w-[500px] h-[500px] bg-accent-600/8 bottom-0 right-0 translate-x-1/3" aria-hidden />
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <motion.div initial={{ opacity:0,y:30 }} whileInView={{ opacity:1,y:0 }} viewport={{ once:true }} transition={{ duration:0.7,ease:[0.16,1,0.3,1] }} className="max-w-2xl mb-16">
           <div className="section-divider" />
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-gold-400 mb-4">Financial Intelligence</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent-400 mb-4">Financial Intelligence</p>
           <h2 className="text-[clamp(2rem,5vw,3.5rem)] font-black tracking-[-0.035em] text-white mb-6 leading-[1.05]">
-            Upload a spreadsheet. <span className="gold-shimmer">Get instant CFO-grade analysis.</span>
+            Upload a spreadsheet. <span className="accent-shimmer">Get instant CFO-grade analysis.</span>
           </h2>
           <p className="text-stone-400 text-lg leading-relaxed">
             Drop in a P&amp;L, cash-flow statement, or revenue sheet. Our engine surfaces margin trends, burn anomalies, and growth inflexion points in seconds.
@@ -81,7 +81,7 @@ export default function FinancialAnalyzer() {
             </div>
             <div className="flex gap-2 mb-5">
               {(["revenue","bar"] as const).map((t) => (
-                <button key={t} onClick={() => setTab(t)} className={`px-3 py-1.5 rounded-lg text-[12px] font-medium transition-all duration-200 cursor-pointer ${ tab===t ? "bg-gold-500/15 text-gold-400 border border-gold-500/25" : "text-stone-500 hover:text-white" }`}>
+                <button key={t} onClick={() => setTab(t)} className={`px-3 py-1.5 rounded-lg text-[12px] font-medium transition-all duration-200 cursor-pointer ${ tab===t ? "bg-accent-500/15 text-accent-400 border border-accent-500/25" : "text-stone-500 hover:text-white" }`}>
                   {t==="revenue" ? "Revenue vs Expenses" : "Monthly Profit"}
                 </button>
               ))}
@@ -92,14 +92,14 @@ export default function FinancialAnalyzer() {
                   {tab==="revenue" ? (
                     <AreaChart data={data} margin={{ top:4,right:4,left:-16,bottom:0 }}>
                       <defs>
-                        <linearGradient id="rev" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="#F59E0B" stopOpacity={0.3}/><stop offset="100%" stopColor="#F59E0B" stopOpacity={0}/></linearGradient>
+                        <linearGradient id="rev" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="#14B8A6" stopOpacity={0.3}/><stop offset="100%" stopColor="#14B8A6" stopOpacity={0}/></linearGradient>
                         <linearGradient id="exp" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="#EF4444" stopOpacity={0.2}/><stop offset="100%" stopColor="#EF4444" stopOpacity={0}/></linearGradient>
                       </defs>
                       <CartesianGrid strokeDasharray="3 3" />
                       <XAxis dataKey="month" tick={{ fontSize:11 }} />
                       <YAxis tick={{ fontSize:11 }} tickFormatter={(v) => `£${v/1000}k`} />
-                      <Tooltip formatter={(v:number,n:string)=>[`£${v.toLocaleString()}`,n]} contentStyle={{ background:"#1C1917",border:"1px solid rgba(245,158,11,0.2)",borderRadius:8 }} labelStyle={{ color:"#FAFAF9",fontWeight:600 }} itemStyle={{ color:"#A8A29E" }} />
-                      <Area type="monotone" dataKey="revenue"  stroke="#F59E0B" fill="url(#rev)" strokeWidth={2} dot={false} />
+                      <Tooltip formatter={(v:number,n:string)=>[`£${v.toLocaleString()}`,n]} contentStyle={{ background:"#0F2825",border:"1px solid rgba(20,184,166,0.2)",borderRadius:8 }} labelStyle={{ color:"#FAFAF9",fontWeight:600 }} itemStyle={{ color:"#A8A29E" }} />
+                      <Area type="monotone" dataKey="revenue"  stroke="#14B8A6" fill="url(#rev)" strokeWidth={2} dot={false} />
                       <Area type="monotone" dataKey="expenses" stroke="#EF4444" fill="url(#exp)" strokeWidth={2} dot={false} />
                     </AreaChart>
                   ) : (
@@ -107,8 +107,8 @@ export default function FinancialAnalyzer() {
                       <CartesianGrid strokeDasharray="3 3" />
                       <XAxis dataKey="month" tick={{ fontSize:11 }} />
                       <YAxis tick={{ fontSize:11 }} tickFormatter={(v) => `£${v/1000}k`} />
-                      <Tooltip formatter={(v:number)=>[`£${v.toLocaleString()}`,"Net Profit"]} contentStyle={{ background:"#1C1917",border:"1px solid rgba(245,158,11,0.2)",borderRadius:8 }} labelStyle={{ color:"#FAFAF9",fontWeight:600 }} itemStyle={{ color:"#A8A29E" }} />
-                      <Bar dataKey="profit" radius={[4,4,0,0]} fill="#F59E0B" fillOpacity={0.7} />
+                      <Tooltip formatter={(v:number)=>[`£${v.toLocaleString()}`,"Net Profit"]} contentStyle={{ background:"#0F2825",border:"1px solid rgba(20,184,166,0.2)",borderRadius:8 }} labelStyle={{ color:"#FAFAF9",fontWeight:600 }} itemStyle={{ color:"#A8A29E" }} />
+                      <Bar dataKey="profit" radius={[4,4,0,0]} fill="#14B8A6" fillOpacity={0.7} />
                     </BarChart>
                   )}
                 </ResponsiveContainer>
@@ -117,14 +117,14 @@ export default function FinancialAnalyzer() {
           </motion.div>
 
           <motion.div initial={{ opacity:0,x:40 }} whileInView={{ opacity:1,x:0 }} viewport={{ once:true }} transition={{ duration:0.7,ease:[0.16,1,0.3,1] }} className="flex flex-col gap-4">
-            <div onDrop={onDrop} onDragOver={(e)=>e.preventDefault()} onClick={()=>inputRef.current?.click()} className="glass-card p-8 flex flex-col items-center justify-center gap-4 cursor-pointer border-dashed border-2 border-white/10 hover:border-gold-500/30 transition-colors duration-300 min-h-[160px]">
+            <div onDrop={onDrop} onDragOver={(e)=>e.preventDefault()} onClick={()=>inputRef.current?.click()} className="glass-card p-8 flex flex-col items-center justify-center gap-4 cursor-pointer border-dashed border-2 border-white/10 hover:border-accent-500/30 transition-colors duration-300 min-h-[160px]">
               <input ref={inputRef} type="file" accept=".csv,.xlsx,.xls" className="hidden" onChange={(e)=>e.target.files?.[0]&&handleFile(e.target.files[0])} />
-              {loading ? <Loader2 size={28} className="text-gold-400 animate-spin" /> : <Upload size={28} className="text-stone-500" />}
+              {loading ? <Loader2 size={28} className="text-accent-400 animate-spin" /> : <Upload size={28} className="text-stone-500" />}
               <div className="text-center">
                 <p className="text-[13px] font-semibold text-white">{loading?"Analysing…":fileName?fileName:"Drop your spreadsheet here"}</p>
                 <p className="text-[11px] text-stone-500 mt-1">{loading?"Running CFO-grade analysis":"CSV, XLSX, XLS · up to 50 MB"}</p>
               </div>
-              {!loading && <div className="flex items-center gap-1.5 text-[12px] font-semibold text-gold-500"><FileSpreadsheet size={14} /> Browse files</div>}
+              {!loading && <div className="flex items-center gap-1.5 text-[12px] font-semibold text-accent-500"><FileSpreadsheet size={14} /> Browse files</div>}
             </div>
 
             <div className="glass-card p-5 flex-1">
@@ -137,9 +137,9 @@ export default function FinancialAnalyzer() {
                   </div>
                 ))}
               </div>
-              <a href="#contact" className="mt-5 flex items-center justify-between w-full p-3 rounded-xl bg-gold-500/8 border border-gold-500/15 hover:bg-gold-500/15 transition-colors duration-200 group cursor-pointer">
-                <span className="text-[12px] font-semibold text-gold-400">Get full advisory report</span>
-                <ChevronRight size={14} className="text-gold-500 group-hover:translate-x-1 transition-transform" />
+              <a href="#contact" className="mt-5 flex items-center justify-between w-full p-3 rounded-xl bg-accent-500/8 border border-accent-500/15 hover:bg-accent-500/15 transition-colors duration-200 group cursor-pointer">
+                <span className="text-[12px] font-semibold text-accent-400">Get full advisory report</span>
+                <ChevronRight size={14} className="text-accent-500 group-hover:translate-x-1 transition-transform" />
               </a>
             </div>
           </motion.div>
