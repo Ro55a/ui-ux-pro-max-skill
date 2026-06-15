@@ -3,16 +3,30 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --gold-primary: #F59E0B;
-  --gold-dim:     #B45309;
-  --bg-deep:      #080705;
-  --bg-base:      #0C0A09;
-  --bg-raised:    #161412;
-  --bg-surface:   #1C1917;
-  --text-primary: #FAFAF9;
-  --text-muted:   #A8A29E;
-  --border:       rgba(255,255,255,0.07);
+/* ── shadcn CSS variables (required by Button / Badge / Card) ── */
+@layer base {
+  :root {
+    --background:        20 14% 4%;
+    --foreground:        60 9%  98%;
+    --card:              20 14% 7%;
+    --card-foreground:   60 9%  98%;
+    --popover:           20 14% 7%;
+    --popover-foreground:60 9%  98%;
+    --primary:           38 92% 50%;
+    --primary-foreground:20 14% 4%;
+    --secondary:         20 6%  14%;
+    --secondary-foreground: 60 9% 98%;
+    --muted:             20 6%  14%;
+    --muted-foreground:  20 5%  55%;
+    --accent:            38 92% 50%;
+    --accent-foreground: 20 14% 4%;
+    --destructive:       0 84%  60%;
+    --destructive-foreground: 60 9% 98%;
+    --border:            20 6%  14%;
+    --input:             20 6%  14%;
+    --ring:              38 92% 50%;
+    --radius:            0.5rem;
+  }
 }
 
 * { box-sizing: border-box; }
@@ -24,21 +38,16 @@ html {
 }
 
 body {
-  background-color: var(--bg-deep);
-  color: var(--text-primary);
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
   font-family: "Inter", system-ui, sans-serif;
   overflow-x: hidden;
 }
 
-/* ─── Gold shimmer text ─── */
 .gold-shimmer {
   background: linear-gradient(
     90deg,
-    #92400E 0%,
-    #F59E0B 35%,
-    #FDE68A 55%,
-    #F59E0B 75%,
-    #92400E 100%
+    #92400E 0%, #F59E0B 35%, #FDE68A 55%, #F59E0B 75%, #92400E 100%
   );
   background-size: 200% auto;
   -webkit-background-clip: text;
@@ -47,20 +56,17 @@ body {
   animation: shimmer 4s linear infinite;
 }
 
-/* ─── Glass card — used sparingly ─── */
 .glass-card {
   background: rgba(255, 255, 255, 0.025);
   border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 14px;
   transition: border-color 0.25s ease, background 0.25s ease;
 }
-
 .glass-card:hover {
   background: rgba(255, 255, 255, 0.04);
   border-color: rgba(245, 158, 11, 0.15);
 }
 
-/* ─── Buttons ─── */
 .btn-gold {
   display: inline-block;
   background: linear-gradient(135deg, #92400E 0%, #D97706 50%, #F59E0B 100%);
@@ -74,17 +80,13 @@ body {
   box-shadow: 0 2px 16px rgba(245, 158, 11, 0.2);
   cursor: pointer;
 }
-
-.btn-gold:hover {
-  opacity: 0.9;
-  transform: translateY(-1px);
-}
+.btn-gold:hover { opacity: 0.9; transform: translateY(-1px); }
 
 .btn-ghost {
   display: inline-block;
   background: transparent;
   border: 1px solid rgba(255, 255, 255, 0.12);
-  color: var(--text-primary);
+  color: hsl(var(--foreground));
   font-weight: 500;
   font-size: 14px;
   border-radius: 8px;
@@ -92,13 +94,11 @@ body {
   transition: border-color 0.2s ease, background 0.2s ease;
   cursor: pointer;
 }
-
 .btn-ghost:hover {
   background: rgba(255, 255, 255, 0.05);
   border-color: rgba(255, 255, 255, 0.2);
 }
 
-/* ─── Section divider ─── */
 .section-divider {
   width: 40px;
   height: 1.5px;
@@ -106,7 +106,6 @@ body {
   margin-bottom: 20px;
 }
 
-/* ─── Subtle blob — use only once per section ─── */
 .glow-blob {
   position: absolute;
   border-radius: 50%;
@@ -115,52 +114,41 @@ body {
   opacity: 0.7;
 }
 
-/* ─── Scrollbar ─── */
 ::-webkit-scrollbar { width: 3px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: rgba(245,158,11,0.2); border-radius: 3px; }
 
-/* ─── Recharts overrides ─── */
 .recharts-cartesian-grid-horizontal line,
 .recharts-cartesian-grid-vertical line { stroke: rgba(255,255,255,0.04) !important; }
 .recharts-text { fill: #78716C !important; font-size: 11px !important; }
 
-/* ─── Keyframes ─── */
 @keyframes shimmer {
   from { background-position: -200% 0; }
   to   { background-position:  200% 0; }
 }
-
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(30px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-
 @keyframes ticker {
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
 }
-
 @keyframes float {
   0%,100% { transform: translateY(0); }
   50%     { transform: translateY(-8px); }
 }
-
 @keyframes glowPulse {
   0%,100% { opacity: 0.5; }
   50%     { opacity: 1;   }
 }
-
 @keyframes borderGlow {
   0%,100% { box-shadow: 0 0 0 1px rgba(245,158,11,0.15); }
   50%     { box-shadow: 0 0 0 1px rgba(245,158,11,0.35), 0 0 16px rgba(245,158,11,0.08); }
 }
 
-/* Respect reduced-motion preference */
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
+  *, *::before, *::after {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
   }
