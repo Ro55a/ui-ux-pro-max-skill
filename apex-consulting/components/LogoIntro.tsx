@@ -38,21 +38,11 @@ export default function LogoIntro() {
               "radial-gradient(ellipse 100% 100% at 50% 50%, #161412 0%, #0F0E0C 45%, #0A0908 100%)",
           }}
         >
-          {/* Vignette */}
-          <div
-            className="absolute inset-0 pointer-events-none"
-            style={{
-              background:
-                "radial-gradient(ellipse 85% 85% at 50% 50%, transparent 35%, rgba(10,9,8,0.9) 100%)",
-            }}
-          />
-
           <div className="relative z-10 flex flex-col items-center gap-12">
             {/*
-              Two-pass technique to cleanly remove the dark halo:
-              1. contrast(3) pushes near-black glow to pure black, keeps whites white
-              2. mix-blend-mode:screen then makes pure black fully transparent
-              brightness(0.95) prevents the whites from burning out before contrast is applied
+              CSS mask fades the rectangular video edges to transparent so the
+              black border blends into the site background — no blend mode needed,
+              logo colours are preserved exactly.
             */}
             <video
               ref={videoRef}
@@ -61,10 +51,12 @@ export default function LogoIntro() {
               loop
               muted
               playsInline
-              className="w-[min(560px,88vw)] object-contain"
+              className="w-[min(600px,90vw)] object-contain"
               style={{
-                mixBlendMode: "screen",
-                filter: "contrast(3) brightness(0.95)",
+                WebkitMaskImage:
+                  "radial-gradient(ellipse 72% 72% at 50% 50%, black 42%, transparent 75%)",
+                maskImage:
+                  "radial-gradient(ellipse 72% 72% at 50% 50%, black 42%, transparent 75%)",
               }}
             />
 
