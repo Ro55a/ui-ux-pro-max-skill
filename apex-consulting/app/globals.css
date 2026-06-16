@@ -1,0 +1,108 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-1: 330 100% 40%;
+    --color-2: 140 100% 55%;
+    --color-3: 210 100% 30%;
+    --color-4: 60 100% 70%;
+    --color-5: 295 100% 45%;
+  }
+}
+
+:root {
+  /* shadcn-compatible CSS variables */
+  --background: 20 10% 4%;
+  --foreground: 38 15% 92%;
+  --primary: 38 20% 82%;
+  --primary-foreground: 20 10% 4%;
+  --muted: 20 8% 14%;
+  --muted-foreground: 30 6% 56%;
+  --border: 30 5% 18%;
+  --ring: 38 20% 74%;
+
+  --accent-400: #D0C9BC;
+  --accent-500: #C4BCAE;
+  --accent-600: #9E9890;
+  --bg-deep:    #0A0908;
+  --bg-base:    #0F0E0C;
+  --bg-raised:  #161512;
+  --bg-surface: #1C1A17;
+}
+
+* { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: var(--bg-deep);
+  color: var(--foreground);
+  font-family: "Inter", system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+/* ── Grain texture — fixed overlay sits above all section backgrounds ── */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9990;
+  opacity: 0.048;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
+}
+
+/* ── Pearl / cream shimmer text ── */
+.accent-shimmer {
+  background: linear-gradient(
+    90deg,
+    #7A7570 0%,
+    #C4BCAE 25%,
+    #F0EDE8 50%,
+    #C4BCAE 75%,
+    #7A7570 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 4s linear infinite;
+}
+
+/* ── Glass card ── */
+.glass-card {
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 1.25rem;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* ── Glow blob ── */
+.glow-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+}
+
+/* ── Section divider ── */
+.section-divider {
+  width: 32px;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(208,201,188,0.5), transparent);
+  margin-bottom: 1.5rem;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar       { width: 4px; }
+::-webkit-scrollbar-track { background: #0A0908; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 2px; }
