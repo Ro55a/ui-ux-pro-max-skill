@@ -3,7 +3,6 @@
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { LiquidButton } from "@/components/ui/liquid-glass-button";
-import { GradientText } from "@/components/ui/gradient-text";
 import { HERO_BADGES } from "@/lib/site-content";
 
 const TICKER_ITEMS = [
@@ -44,7 +43,6 @@ export default function HeroSection() {
             animate="show"
             className="max-w-4xl"
           >
-            {/* Eyebrow */}
             <motion.div variants={item} className="flex items-center gap-3 mb-10">
               <div className="w-1 h-1 rounded-full bg-accent-500" />
               <span className="text-[10px] font-semibold uppercase tracking-[0.25em] text-accent-600">
@@ -52,19 +50,17 @@ export default function HeroSection() {
               </span>
             </motion.div>
 
-            {/* Headline */}
             <motion.h1
               variants={item}
               className="text-[clamp(2.8rem,6.5vw,5.5rem)] font-black leading-[0.95] tracking-[-0.04em] mb-10"
             >
               <span className="text-white/90">Scale Your</span>
               <br />
-              <GradientText className="accent-shimmer">Business</GradientText>
+              <span className="accent-shimmer">Business</span>
               <br />
               <span className="text-white/90">Without Limits</span>
             </motion.h1>
 
-            {/* Sub */}
             <motion.p
               variants={item}
               className="text-[17px] text-white/35 leading-relaxed max-w-xl mb-14 font-light"
@@ -74,7 +70,6 @@ export default function HeroSection() {
               transformation that generates measurable results within 30 days.
             </motion.p>
 
-            {/* CTAs */}
             <motion.div variants={item} className="flex flex-wrap gap-3 mb-16">
               <LiquidButton size="lg" onClick={() => { window.location.hash = "#contact"; }}>
                 Start Today <ArrowRight size={15} />
@@ -88,7 +83,6 @@ export default function HeroSection() {
               </LiquidButton>
             </motion.div>
 
-            {/* Trust badges */}
             <motion.div variants={item} className="flex flex-wrap gap-6">
               {HERO_BADGES.map(({ icon: Icon, label }) => (
                 <div key={label} className="flex items-center gap-2.5">
@@ -101,7 +95,6 @@ export default function HeroSection() {
             </motion.div>
           </motion.div>
 
-          {/* Floating dashboard card */}
           <motion.div
             initial={{ opacity: 0, x: 60, y: 20 }}
             animate={{ opacity: 1, x: 0,  y: 0  }}
@@ -113,7 +106,6 @@ export default function HeroSection() {
         </div>
       </div>
 
-      {/* Ticker */}
       <div className="relative z-10 border-t border-white/[0.04] overflow-hidden py-4">
         <div className="flex whitespace-nowrap animate-ticker">
           {TICKER_ITEMS.map((t, i) => (
