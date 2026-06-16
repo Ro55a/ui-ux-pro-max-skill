@@ -46,6 +46,7 @@ export default function AnimatedHeroSection() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
 
+          {/* Left — animated headline */}
           <motion.div
             initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -99,6 +100,7 @@ export default function AnimatedHeroSection() {
             </div>
           </motion.div>
 
+          {/* Right — feature list */}
           <motion.div
             initial={{ opacity: 0, x: 40 }}
             whileInView={{ opacity: 1, x: 0 }}

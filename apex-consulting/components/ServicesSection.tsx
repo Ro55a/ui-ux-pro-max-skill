@@ -5,6 +5,7 @@ import {
   TrendingUp, PieChart, Settings, Rocket, BarChart2,
   Target, Search, Users, ArrowRight,
 } from "lucide-react";
+import { LiquidButton } from "@/components/ui/liquid-glass-button";
 
 const SERVICES = [
   {
@@ -78,6 +79,7 @@ export default function ServicesSection() {
   return (
     <section id="services" className="relative py-32 overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -101,6 +103,7 @@ export default function ServicesSection() {
           </p>
         </motion.div>
 
+        {/* Grid */}
         <motion.div
           variants={container}
           initial="hidden"
@@ -131,12 +134,14 @@ export default function ServicesSection() {
                     </span>
                   ))}
                 </div>
-                <a
-                  href="#contact"
-                  className="flex items-center gap-1.5 text-[11px] font-semibold text-accent-500 opacity-0 group-hover:opacity-100 transition-opacity duration-200 tracking-[0.05em]"
+                <LiquidButton
+                  size="sm"
+                  variant="ghost"
+                  className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 h-7 px-3 text-[10px]"
+                  onClick={() => { window.location.hash = "#contact"; }}
                 >
-                  Learn more <ArrowRight size={11} />
-                </a>
+                  Learn more <ArrowRight size={10} />
+                </LiquidButton>
               </div>
             </motion.div>
           ))}

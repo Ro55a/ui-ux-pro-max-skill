@@ -2,6 +2,7 @@ export default function Footer() {
   return (
     <footer className="border-t border-white/[0.04] py-14">
       <div className="max-w-7xl mx-auto px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-6">
+        {/* Logo */}
         <a href="#" className="flex items-center gap-3" aria-label="Catalyst & Co. home">
           <svg width="24" height="24" viewBox="0 0 36 36" fill="none" aria-hidden>
             <path
@@ -20,7 +21,7 @@ export default function Footer() {
         </a>
 
         <p className="text-[11px] text-white/15 tracking-wide">
-          © {new Date().getFullYear()} Catalyst &amp; Co. Ltd. All rights reserved. Registered in England &amp; Wales.
+          &copy; {new Date().getFullYear()} Catalyst &amp; Co. Ltd. All rights reserved. Registered in England &amp; Wales.
         </p>
 
         <div className="flex gap-6">

@@ -39,6 +39,7 @@ export default function CTASection() {
       <div className="absolute inset-0 bg-gradient-to-b from-catalyst-base to-catalyst-deep" aria-hidden />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -58,6 +59,7 @@ export default function CTASection() {
         </motion.div>
 
         <div className="grid lg:grid-cols-[1fr_360px] gap-8 max-w-5xl mx-auto">
+          {/* Form */}
           <motion.div
             initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -97,6 +99,7 @@ export default function CTASection() {
                   ))}
                 </div>
 
+                {/* Service selector */}
                 <div>
                   <p className="text-[10px] font-semibold uppercase tracking-[0.15em] text-white/25 mb-3">
                     Services of Interest
@@ -133,7 +136,12 @@ export default function CTASection() {
                   />
                 </div>
 
-                <LiquidButton type="submit" disabled={loading} size="xl" className="w-full">
+                <LiquidButton
+                  type="submit"
+                  disabled={loading}
+                  size="xl"
+                  className="w-full"
+                >
                   {loading ? (
                     <><Loader2 size={15} className="animate-spin" /> Submitting…</>
                   ) : (
@@ -144,6 +152,7 @@ export default function CTASection() {
             )}
           </motion.div>
 
+          {/* Contact info */}
           <motion.div
             initial={{ opacity: 0, x: 40 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -173,9 +182,12 @@ export default function CTASection() {
               </div>
             ))}
 
+            {/* Guarantee */}
             <div className="glass-card p-6">
               <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-accent-600 mb-3">Our Guarantee</p>
-              <p className="text-[13px] text-white/30 leading-relaxed">{COMPANY.guarantee}</p>
+              <p className="text-[13px] text-white/30 leading-relaxed">
+                {COMPANY.guarantee}
+              </p>
             </div>
 
             {/* Experience card */}

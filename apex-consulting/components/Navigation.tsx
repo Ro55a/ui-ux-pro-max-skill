@@ -18,6 +18,7 @@ export default function Navigation() {
 
   return (
     <>
+      {/* ── Logo header bar ── */}
       <motion.header
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0,   opacity: 1 }}
@@ -29,18 +30,34 @@ export default function Navigation() {
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-8 h-full flex items-center justify-between">
+          {/* Logo mark + wordmark */}
           <a href="#" className="flex items-center gap-4 group" aria-label="Catalyst & Co. home">
             <svg width="32" height="32" viewBox="0 0 36 36" fill="none" aria-hidden>
-              <path d="M 25 8 A 11.5 11.5 0 1 0 25 28" stroke="#D0C9BC" strokeWidth="1.1" fill="none" strokeLinecap="round" />
+              {/* Thin C arc */}
+              <path
+                d="M 25 8 A 11.5 11.5 0 1 0 25 28"
+                stroke="#D0C9BC"
+                strokeWidth="1.1"
+                fill="none"
+                strokeLinecap="round"
+              />
+              {/* Diamond accent */}
               <path d="M 27 18 L 25 15.8 L 23 18 L 25 20.2 Z" fill="#D0C9BC" />
+              {/* Short horizontal line */}
               <line x1="27" y1="18" x2="35" y2="18" stroke="#D0C9BC" strokeWidth="0.7" strokeLinecap="round" />
             </svg>
+
             <div className="leading-none">
-              <span className="block text-[13px] font-light tracking-[0.28em] uppercase text-accent-400">CATALYST</span>
-              <span className="block text-[9px] font-normal tracking-[0.22em] uppercase text-accent-600 mt-0.5">&amp; Co. Consulting</span>
+              <span className="block text-[13px] font-light tracking-[0.28em] uppercase text-accent-400">
+                CATALYST
+              </span>
+              <span className="block text-[9px] font-normal tracking-[0.22em] uppercase text-accent-600 mt-0.5">
+                &amp; Co. Consulting
+              </span>
             </div>
           </a>
 
+          {/* Right side: CTA + mobile toggle */}
           <div className="flex items-center gap-4">
             <LiquidButton
               size="sm"
@@ -60,8 +77,10 @@ export default function Navigation() {
         </div>
       </motion.header>
 
+      {/* ── TubelightNavbar — floating pill below header on desktop, bottom on mobile ── */}
       <NavBar />
 
+      {/* ── Mobile fullscreen menu ── */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
@@ -69,14 +88,13 @@ export default function Navigation() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-[45] bg-catalyst-base/96 backdrop-blur-2xl flex flex-col items-center justify-center gap-7"
+            className="fixed inset-0 z-45 bg-catalyst-base/96 backdrop-blur-2xl flex flex-col items-center justify-center gap-7"
           >
             {[
-              { label: "Services",     href: "#services"     },
-              { label: "Analytics",    href: "#analytics"    },
-              { label: "Intelligence", href: "#intelligence" },
-              { label: "Results",      href: "#results"      },
-              { label: "Contact",      href: "#contact"      },
+              { label: "Services",    href: "#services"   },
+              { label: "Analytics",   href: "#analytics"  },
+              { label: "Results",     href: "#results"    },
+              { label: "Contact",     href: "#contact"    },
             ].map((l) => (
               <a
                 key={l.href}

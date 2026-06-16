@@ -24,6 +24,7 @@ export default function FinancialAnalyzer() {
       <div className="glow-blob w-[500px] h-[500px] bg-white/[0.03] bottom-0 right-0 translate-x-1/3" aria-hidden />
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -42,11 +43,12 @@ export default function FinancialAnalyzer() {
           <p className="text-stone-400 text-lg leading-relaxed">
             Share your financial data and our team delivers institutional-grade analysis —
             margin trends, burn anomalies, and growth inflexion points — straight to your inbox.
-            Here’s the kind of insight we surface.
+            Here&apos;s the kind of insight we surface.
           </p>
         </motion.div>
 
         <div className="grid lg:grid-cols-[1fr_360px] gap-6">
+          {/* ── Left: chart panel ── */}
           <motion.div
             initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -54,6 +56,7 @@ export default function FinancialAnalyzer() {
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
             className="glass-card p-6"
           >
+            {/* KPI row */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
               {DEMO_KPI.map(({ label, value, delta, up }) => (
                 <div key={label} className="p-3 rounded-xl bg-white/[0.02] border border-white/[0.05]">
@@ -66,6 +69,7 @@ export default function FinancialAnalyzer() {
               ))}
             </div>
 
+            {/* Tab toggle */}
             <div className="flex gap-2 mb-5">
               {(["revenue", "bar"] as const).map((t) => (
                 <LiquidButton
@@ -80,6 +84,7 @@ export default function FinancialAnalyzer() {
               ))}
             </div>
 
+            {/* Chart */}
             <AnimatePresence mode="wait">
               <motion.div
                 key={tab}
@@ -107,7 +112,7 @@ export default function FinancialAnalyzer() {
                       <YAxis tick={{ fontSize: 11 }} tickFormatter={(v) => `£${v / 1000}k`} />
                       <Tooltip
                         formatter={(v: number, n: string) => [`£${v.toLocaleString()}`, n]}
-                        contentStyle={{ background: "#1C1917", border: "1px solid rgba(16,185,129,0.2)", borderRadius: 8 }}
+                        contentStyle={{ background: "#1C1917", border: "1px solid rgba(245,158,11,0.2)", borderRadius: 8 }}
                         labelStyle={{ color: "#FAFAF9", fontWeight: 600 }}
                         itemStyle={{ color: "#A8A29E" }}
                       />
@@ -144,6 +149,7 @@ export default function FinancialAnalyzer() {
             </p>
           </motion.div>
 
+          {/* ── Right: how it works + insights ── */}
           <motion.div
             initial={{ opacity: 0, x: 40 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -151,6 +157,7 @@ export default function FinancialAnalyzer() {
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
             className="flex flex-col gap-4"
           >
+            {/* How it works */}
             <div className="glass-card p-6">
               <p className="text-[11px] font-semibold uppercase tracking-widest text-stone-500 mb-5">
                 How it works
@@ -174,6 +181,7 @@ export default function FinancialAnalyzer() {
               </LiquidButton>
             </div>
 
+            {/* Insights */}
             <div className="glass-card p-5 flex-1">
               <p className="text-[11px] font-semibold uppercase tracking-widest text-stone-500 mb-4">
                 Example insights we surface
