@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { TrendingUp, Shield, Zap, BarChart2, Target, Users } from "lucide-react";
+import { TrendingUp, Shield, Zap, BarChart2, Target } from "lucide-react";
 import { useRef } from "react";
 
 const CARDS = [
@@ -76,7 +76,10 @@ function TiltCard({ card, index }: { card: typeof CARDS[0]; index: number }) {
     x.set((e.clientX - rect.left) / rect.width - 0.5);
     y.set((e.clientY - rect.top) / rect.height - 0.5);
   };
-  const handleMouseLeave = () => { x.set(0); y.set(0); };
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
 
   return (
     <motion.div
@@ -99,13 +102,10 @@ function TiltCard({ card, index }: { card: typeof CARDS[0]; index: number }) {
         transformStyle: "preserve-3d",
         perspective: 800,
       }}
-      className={`absolute w-[160px] cursor-pointer`}
+      className="absolute w-[160px] cursor-pointer"
     >
       <div
-        className={`
-          glass-card p-5 bg-gradient-to-br ${card.color} ${card.border}
-          shadow-dark-lg transition-shadow duration-300 hover:shadow-[0_16px_48px_rgba(0,0,0,0.6)]
-        `}
+        className={`glass-card p-5 bg-gradient-to-br ${card.color} ${card.border} shadow-dark-lg transition-shadow duration-300 hover:shadow-[0_16px_48px_rgba(0,0,0,0.6)]`}
       >
         <div className="w-9 h-9 rounded-xl bg-white/[0.06] border border-white/[0.08] flex items-center justify-center mb-4">
           <Icon size={16} className="text-accent-400" />
@@ -120,7 +120,6 @@ function TiltCard({ card, index }: { card: typeof CARDS[0]; index: number }) {
 export default function DisplayCards() {
   return (
     <section className="relative py-20 overflow-hidden">
-      {/* Subtle radial glow */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
@@ -131,7 +130,7 @@ export default function DisplayCards() {
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
-          {/* Text side */}
+
           <motion.div
             initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -153,7 +152,6 @@ export default function DisplayCards() {
               and sit in the room when decisions get made.
             </p>
 
-            {/* Stat pills */}
             <div className="flex flex-wrap gap-3 mt-8">
               {[
                 { label: "Avg engagement", value: "6 weeks" },
@@ -168,14 +166,12 @@ export default function DisplayCards() {
             </div>
           </motion.div>
 
-          {/* Cards fan */}
           <div className="relative flex-1 hidden lg:block" style={{ height: 280 }}>
             {CARDS.map((card, i) => (
               <TiltCard key={card.title} card={card} index={i} />
             ))}
           </div>
 
-          {/* Mobile: simple grid */}
           <div className="grid grid-cols-2 gap-3 w-full lg:hidden">
             {CARDS.slice(0, 4).map((card) => {
               const Icon = card.icon;
@@ -193,6 +189,7 @@ export default function DisplayCards() {
               );
             })}
           </div>
+
         </div>
       </div>
     </section>
