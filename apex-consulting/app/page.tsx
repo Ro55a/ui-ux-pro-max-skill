@@ -1,3 +1,4 @@
+import dynamic              from "next/dynamic";
 import Navigation           from "@/components/Navigation";
 import HeroSection          from "@/components/HeroSection";
 import HeroScroll           from "@/components/HeroScroll";
@@ -10,9 +11,12 @@ import StatsSection         from "@/components/StatsSection";
 import CTASection           from "@/components/CTASection";
 import Footer               from "@/components/Footer";
 
+const LogoIntro = dynamic(() => import("@/components/LogoIntro"), { ssr: false });
+
 export default function Home() {
   return (
     <main className="bg-catalyst-deep min-h-screen">
+      <LogoIntro />
       <Navigation />
       <HeroSection />
       <HeroScroll />
