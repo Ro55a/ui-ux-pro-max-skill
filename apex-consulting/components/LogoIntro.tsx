@@ -47,8 +47,13 @@ export default function LogoIntro() {
             }}
           />
 
-          {/* Video — mix-blend-mode:screen makes black transparent */}
           <div className="relative z-10 flex flex-col items-center gap-12">
+            {/*
+              Two-pass technique to cleanly remove the dark halo:
+              1. contrast(3) pushes near-black glow to pure black, keeps whites white
+              2. mix-blend-mode:screen then makes pure black fully transparent
+              brightness(0.95) prevents the whites from burning out before contrast is applied
+            */}
             <video
               ref={videoRef}
               src="/logo-intro.mp4"
@@ -56,14 +61,13 @@ export default function LogoIntro() {
               loop
               muted
               playsInline
-              className="w-[min(540px,85vw)] object-contain"
+              className="w-[min(560px,88vw)] object-contain"
               style={{
                 mixBlendMode: "screen",
-                filter: "drop-shadow(0 0 40px rgba(208,201,188,0.15))",
+                filter: "contrast(3) brightness(0.95)",
               }}
             />
 
-            {/* Click to enter prompt */}
             <AnimatePresence>
               {ready && (
                 <motion.div
@@ -86,7 +90,6 @@ export default function LogoIntro() {
             </AnimatePresence>
           </div>
 
-          {/* Thin bottom line */}
           <motion.div
             initial={{ scaleX: 0, opacity: 0 }}
             animate={{ scaleX: 1, opacity: 1 }}
