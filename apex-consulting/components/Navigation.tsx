@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { NavBar } from "@/components/ui/tubelight-navbar";
+import { LiquidButton } from "@/components/ui/liquid-glass-button";
 
 export default function Navigation() {
   const [scrolled,  setScrolled]  = useState(false);
@@ -17,7 +18,6 @@ export default function Navigation() {
 
   return (
     <>
-      {/* ── Logo header bar ── */}
       <motion.header
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0,   opacity: 1 }}
@@ -31,34 +31,24 @@ export default function Navigation() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8 h-full flex items-center justify-between">
           <a href="#" className="flex items-center gap-4 group" aria-label="Catalyst & Co. home">
             <svg width="32" height="32" viewBox="0 0 36 36" fill="none" aria-hidden>
-              <path
-                d="M 25 8 A 11.5 11.5 0 1 0 25 28"
-                stroke="#D0C9BC"
-                strokeWidth="1.1"
-                fill="none"
-                strokeLinecap="round"
-              />
+              <path d="M 25 8 A 11.5 11.5 0 1 0 25 28" stroke="#D0C9BC" strokeWidth="1.1" fill="none" strokeLinecap="round" />
               <path d="M 27 18 L 25 15.8 L 23 18 L 25 20.2 Z" fill="#D0C9BC" />
               <line x1="27" y1="18" x2="35" y2="18" stroke="#D0C9BC" strokeWidth="0.7" strokeLinecap="round" />
             </svg>
-
             <div className="leading-none">
-              <span className="block text-[13px] font-light tracking-[0.28em] uppercase text-accent-400">
-                CATALYST
-              </span>
-              <span className="block text-[9px] font-normal tracking-[0.22em] uppercase text-accent-600 mt-0.5">
-                &amp; Co. Consulting
-              </span>
+              <span className="block text-[13px] font-light tracking-[0.28em] uppercase text-accent-400">CATALYST</span>
+              <span className="block text-[9px] font-normal tracking-[0.22em] uppercase text-accent-600 mt-0.5">&amp; Co. Consulting</span>
             </div>
           </a>
 
           <div className="flex items-center gap-4">
-            <a
-              href="#contact"
-              className="hidden sm:inline-flex btn-accent text-[10px] py-2 px-5"
+            <LiquidButton
+              size="sm"
+              className="hidden sm:inline-flex"
+              onClick={() => { window.location.hash = "#contact"; }}
             >
               Book a Call
-            </a>
+            </LiquidButton>
             <button
               className="text-white/30 hover:text-white/70 transition-colors cursor-pointer"
               onClick={() => setMenuOpen((p) => !p)}
@@ -82,10 +72,11 @@ export default function Navigation() {
             className="fixed inset-0 z-[45] bg-catalyst-base/96 backdrop-blur-2xl flex flex-col items-center justify-center gap-7"
           >
             {[
-              { label: "Services",  href: "#services"  },
-              { label: "Analytics", href: "#analytics" },
-              { label: "Results",   href: "#results"   },
-              { label: "Contact",   href: "#contact"   },
+              { label: "Services",     href: "#services"     },
+              { label: "Analytics",    href: "#analytics"    },
+              { label: "Intelligence", href: "#intelligence" },
+              { label: "Results",      href: "#results"      },
+              { label: "Contact",      href: "#contact"      },
             ].map((l) => (
               <a
                 key={l.href}
@@ -96,13 +87,13 @@ export default function Navigation() {
                 {l.label}
               </a>
             ))}
-            <a
-              href="#contact"
-              className="btn-accent mt-6 text-sm"
-              onClick={() => setMenuOpen(false)}
+            <LiquidButton
+              size="md"
+              className="mt-6"
+              onClick={() => { setMenuOpen(false); window.location.hash = "#contact"; }}
             >
               Book a Call
-            </a>
+            </LiquidButton>
           </motion.div>
         )}
       </AnimatePresence>

@@ -20,56 +20,36 @@ const BADGES = [
 ];
 
 export default function HeroSection() {
-  const container = {
-    hidden: {},
-    show: { transition: { staggerChildren: 0.1 } },
-  };
+  const container = { hidden: {}, show: { transition: { staggerChildren: 0.1 } } };
   const item = {
     hidden: { opacity: 0, y: 40 },
-    show:   { opacity: 1, y: 0,  transition: { duration: 0.85, ease: [0.16, 1, 0.3, 1] } },
+    show:   { opacity: 1, y: 0, transition: { duration: 0.85, ease: [0.16, 1, 0.3, 1] } },
   };
 
   return (
     <section className="relative min-h-screen flex flex-col overflow-hidden">
       <div
         className="absolute inset-0 pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(ellipse 70% 50% at 50% -10%, rgba(208,201,188,0.04) 0%, transparent 70%)",
-        }}
+        style={{ background: "radial-gradient(ellipse 70% 50% at 50% -10%, rgba(208,201,188,0.04) 0%, transparent 70%)" }}
         aria-hidden
       />
 
       <div className="relative z-10 flex-1 flex items-center pt-32 pb-16">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 w-full">
-          <motion.div
-            variants={container}
-            initial="hidden"
-            animate="show"
-            className="max-w-4xl"
-          >
+          <motion.div variants={container} initial="hidden" animate="show" className="max-w-4xl">
+
             <motion.div variants={item} className="flex items-center gap-3 mb-10">
               <div className="w-1 h-1 rounded-full bg-accent-500" />
-              <span className="text-[10px] font-semibold uppercase tracking-[0.25em] text-accent-600">
-                Elite Business Advisory
-              </span>
+              <span className="text-[10px] font-semibold uppercase tracking-[0.25em] text-accent-600">Elite Business Advisory</span>
             </motion.div>
 
-            <motion.h1
-              variants={item}
-              className="text-[clamp(2.8rem,6.5vw,5.5rem)] font-black leading-[0.95] tracking-[-0.04em] mb-10"
-            >
-              <span className="text-white/90">Scale Your</span>
-              <br />
-              <span className="accent-shimmer">Business</span>
-              <br />
+            <motion.h1 variants={item} className="text-[clamp(2.8rem,6.5vw,5.5rem)] font-black leading-[0.95] tracking-[-0.04em] mb-10">
+              <span className="text-white/90">Scale Your</span><br />
+              <span className="accent-shimmer">Business</span><br />
               <span className="text-white/90">Without Limits</span>
             </motion.h1>
 
-            <motion.p
-              variants={item}
-              className="text-[17px] text-white/35 leading-relaxed max-w-xl mb-14 font-light"
-            >
+            <motion.p variants={item} className="text-[17px] text-white/35 leading-relaxed max-w-xl mb-14 font-light">
               Catalyst &amp; Co. delivers institutional-grade intelligence to ambitious
               startups and SMEs — financial precision, market research, and operational
               transformation that generates measurable results within 30 days.
@@ -79,9 +59,9 @@ export default function HeroSection() {
               <LiquidButton size="lg" onClick={() => { window.location.hash = "#contact"; }}>
                 Start Today <ArrowRight size={15} />
               </LiquidButton>
-              <a href="#services" className="btn-ghost flex items-center gap-2 text-[13px]">
+              <LiquidButton variant="ghost" size="lg" onClick={() => { window.location.hash = "#services"; }}>
                 Explore Services
-              </a>
+              </LiquidButton>
             </motion.div>
 
             <motion.div variants={item} className="flex flex-wrap gap-6">
@@ -98,7 +78,7 @@ export default function HeroSection() {
 
           <motion.div
             initial={{ opacity: 0, x: 60, y: 20 }}
-            animate={{ opacity: 1, x: 0,  y: 0  }}
+            animate={{ opacity: 1, x: 0, y: 0 }}
             transition={{ duration: 1.1, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
             className="absolute right-6 lg:right-16 top-1/2 -translate-y-1/2 hidden xl:block w-[320px]"
           >
@@ -131,7 +111,6 @@ function FloatingDashboard() {
         </div>
         <div className="w-1.5 h-1.5 rounded-full bg-emerald-400/70 animate-pulse" />
       </div>
-
       <div className="space-y-2.5 mb-5">
         {[
           { label: "Revenue",   value: "+127%", up: true  },
@@ -140,28 +119,15 @@ function FloatingDashboard() {
         ].map(({ label, value, up }) => (
           <div key={label} className="flex items-center justify-between p-3 rounded-xl bg-white/[0.025] border border-white/[0.04]">
             <span className="text-[11px] text-white/30">{label}</span>
-            <span className={`text-[12px] font-semibold ${up ? "text-emerald-400/80" : "text-red-400/80"}`}>
-              {value}
-            </span>
+            <span className={`text-[12px] font-semibold ${up ? "text-emerald-400/80" : "text-red-400/80"}`}>{value}</span>
           </div>
         ))}
       </div>
-
       <div>
         <p className="text-[10px] text-white/20 mb-2 tracking-[0.1em] uppercase">Revenue Trend</p>
         <div className="flex items-end gap-1 h-10">
           {[30, 45, 38, 55, 49, 68, 72, 80, 76, 95, 88, 100].map((h, i) => (
-            <div
-              key={i}
-              className="flex-1 rounded-sm"
-              style={{
-                height: `${h}%`,
-                background:
-                  i === 11
-                    ? "rgba(208,201,188,0.7)"
-                    : "rgba(208,201,188,0.1)",
-              }}
-            />
+            <div key={i} className="flex-1 rounded-sm" style={{ height: `${h}%`, background: i === 11 ? "rgba(208,201,188,0.7)" : "rgba(208,201,188,0.1)" }} />
           ))}
         </div>
       </div>
