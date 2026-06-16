@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Apex Advisory | Elite Business Consulting",
-  description: "Apex Advisory delivers Fortune-500 grade intelligence to startups and SMEs — financial precision, market research, and operational transformation.",
+  title: "Catalyst & Co. | Business Advisory",
+  description: "Catalyst & Co. delivers senior-level advisory to founders and management teams — financial precision, market research, and operational transformation.",
   openGraph: {
-    title: "Apex Advisory | Elite Business Consulting",
-    description: "Financial analysis, market research, and growth strategy for startups and SMEs.",
+    title: "Catalyst & Co. | Business Advisory",
+    description: "Growth strategy, financial analysis, and market intelligence for startups and SMEs.",
     type: "website",
   },
 };

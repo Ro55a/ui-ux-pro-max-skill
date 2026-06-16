@@ -4,36 +4,33 @@
 @tailwind utilities;
 
 :root {
-  --accent-glow:    rgba(20, 184, 166, 0.15);
-  --accent-primary: #14B8A6;
-  --accent-dim:     #0F766E;
-  --bg-deep:        #020B0A;
-  --bg-base:        #051210;
-  --bg-raised:      #0A1F1D;
-  --bg-surface:     #0F2825;
-  --text-primary:   #FAFAF9;
-  --text-muted:     #A8A29E;
-  --border:         rgba(255,255,255,0.07);
+  --bg-deep:      #0A0908;
+  --bg-base:      #0F0E0C;
+  --bg-raised:    #161512;
+  --bg-surface:   #1C1A17;
+  --text-primary: #F0EDE8;
+  --text-muted:   #9E9890;
+  --border:       rgba(255,255,255,0.06);
 
-  /* shadcn/ui CSS variables */
-  --background:   20 60% 3%;
-  --foreground:   180 5% 98%;
-  --card:         174 60% 5%;
-  --card-foreground: 180 5% 98%;
-  --primary:      174 76% 40%;
-  --primary-foreground: 174 60% 4%;
-  --secondary:    174 20% 12%;
-  --secondary-foreground: 180 5% 90%;
-  --muted:        174 20% 12%;
-  --muted-foreground: 174 10% 55%;
-  --accent:       174 20% 14%;
-  --accent-foreground: 180 5% 98%;
-  --destructive:  0 84% 60%;
-  --destructive-foreground: 0 0% 98%;
-  --border-var:   174 20% 14%;
-  --input:        174 20% 14%;
-  --ring:         174 76% 40%;
-  --radius:       0.75rem;
+  /* shadcn CSS variables — parchment/cream theme */
+  --background:              38 5% 5%;
+  --foreground:              38 18% 93%;
+  --card:                    38 5% 7%;
+  --card-foreground:         38 18% 93%;
+  --primary:                 38 20% 82%;
+  --primary-foreground:      38 5% 6%;
+  --secondary:               38 8% 12%;
+  --secondary-foreground:    38 15% 80%;
+  --muted:                   38 8% 12%;
+  --muted-foreground:        38 10% 52%;
+  --accent:                  38 8% 14%;
+  --accent-foreground:       38 18% 90%;
+  --destructive:             0 84% 60%;
+  --destructive-foreground:  0 0% 98%;
+  --border-var:              38 10% 13%;
+  --input:                   38 10% 13%;
+  --ring:                    38 20% 82%;
+  --radius:                  0.5rem;
 }
 
 * { box-sizing: border-box; }
@@ -41,6 +38,7 @@
 html {
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
@@ -50,145 +48,143 @@ body {
   overflow-x: hidden;
 }
 
-/* ── Subtle grain texture overlay ── */
+/*
+  Grain texture — position: fixed + z-index: 9990 ensures it renders
+  consistently over every section and hero, regardless of their backgrounds.
+  pointer-events: none means all clicks pass through.
+*/
 body::after {
   content: "";
   position: fixed;
   inset: 0;
   pointer-events: none;
-  z-index: 1;
-  opacity: 0.025;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-size: 200px 200px;
+  z-index: 9990;
+  opacity: 0.045;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='250' height='250'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.78' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='250' height='250' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
   background-repeat: repeat;
 }
 
-/* ─── Scroll-driven reveal utility ─── */
+/* ── Scroll-driven reveal ── */
 @supports (animation-timeline: scroll()) {
-  .scroll-reveal       { animation: fadeUp linear both; animation-timeline: view(); animation-range: entry 0% entry 30%; }
-  .scroll-reveal-left  { animation: slideLeft linear both; animation-timeline: view(); animation-range: entry 0% entry 30%; }
+  .scroll-reveal      { animation: fadeUp linear both; animation-timeline: view(); animation-range: entry 0% entry 30%; }
 }
 @supports not (animation-timeline: scroll()) {
-  .scroll-reveal, .scroll-reveal-left { opacity: 1; transform: none; }
+  .scroll-reveal { opacity:1; transform:none; }
 }
 
-/* ─── Teal shimmer text ─── */
+/* ── Pearl shimmer ── */
 .accent-shimmer {
   background: linear-gradient(
     90deg,
-    #0F766E 0%,
-    #14B8A6 30%,
-    #5EEAD4 50%,
-    #14B8A6 70%,
-    #0F766E 100%
+    #7A7570 0%,
+    #C4BCAE 25%,
+    #F0EDE8 50%,
+    #C4BCAE 75%,
+    #7A7570 100%
   );
   background-size: 200% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  animation: shimmer 3s linear infinite;
+  animation: shimmer 4s linear infinite;
 }
 
-/* ─── Glass card ─── */
+/* ── Glass card ── */
 .glass-card {
-  background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.025);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
 }
 .glass-card:hover {
-  background: rgba(255, 255, 255, 0.05);
-  border-color: rgba(20, 184, 166, 0.2);
-  box-shadow: 0 8px 40px rgba(20, 184, 166, 0.08);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(208, 201, 188, 0.14);
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* ─── Accent button ─── */
+/* ── Outlined pill button (primary) ── */
 .btn-accent {
-  background: linear-gradient(135deg, #0F766E, #14B8A6);
-  color: #020B0A;
-  font-weight: 700;
-  letter-spacing: -0.01em;
-  border-radius: 10px;
-  padding: 14px 32px;
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 4px 24px rgba(20,184,166,0.25);
-}
-.btn-accent:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 40px rgba(20,184,166,0.4);
-}
-
-.btn-ghost {
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.12);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  border: 1px solid rgba(208, 201, 188, 0.25);
   color: var(--text-primary);
   font-weight: 500;
-  border-radius: 10px;
-  padding: 13px 28px;
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  font-size: 11px;
+  border-radius: 60px;
+  padding: 11px 26px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  white-space: nowrap;
 }
-.btn-ghost:hover {
-  background: rgba(255,255,255,0.08);
-  border-color: rgba(20,184,166,0.3);
-  transform: translateY(-1px);
+.btn-accent:hover {
+  background: rgba(208, 201, 188, 0.07);
+  border-color: rgba(208, 201, 188, 0.5);
 }
 
-/* ─── Section divider ─── */
+/* ── Ghost button ── */
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.07);
+  color: rgba(240,237,232,0.5);
+  font-weight: 400;
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border-radius: 60px;
+  padding: 11px 26px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.btn-ghost:hover {
+  background: rgba(255,255,255,0.04);
+  border-color: rgba(255,255,255,0.15);
+  color: rgba(240,237,232,0.85);
+}
+
+/* ── Section divider ── */
 .section-divider {
-  width: 48px;
-  height: 2px;
-  background: linear-gradient(90deg, #14B8A6, transparent);
+  width: 28px;
+  height: 1px;
+  background: rgba(196, 188, 174, 0.35);
   margin-bottom: 24px;
 }
 
-/* ─── Noise overlay utility ─── */
-.noise::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-  pointer-events: none;
-  z-index: 1;
-  opacity: 0.6;
-}
-
-/* ─── Blob glows ─── */
+/* ── Glow blob (very subtle) ── */
 .glow-blob {
   position: absolute;
   border-radius: 50%;
-  filter: blur(100px);
+  filter: blur(130px);
   pointer-events: none;
 }
 
-/* ─── Scrollbar ─── */
-::-webkit-scrollbar { width: 4px; }
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 3px; }
 ::-webkit-scrollbar-track { background: var(--bg-deep); }
-::-webkit-scrollbar-thumb { background: rgba(20,184,166,0.3); border-radius: 4px; }
+::-webkit-scrollbar-thumb { background: rgba(196,188,174,0.2); border-radius: 4px; }
 
-/* ─── Chart container ─── */
+/* ── Charts ── */
 .recharts-cartesian-grid-horizontal line,
-.recharts-cartesian-grid-vertical line { stroke: rgba(255,255,255,0.05) !important; }
-.recharts-text { fill: #A8A29E !important; font-size: 11px !important; }
+.recharts-cartesian-grid-vertical line { stroke: rgba(255,255,255,0.04) !important; }
+.recharts-text { fill: #9E9890 !important; font-size: 11px !important; }
 .recharts-tooltip-wrapper .recharts-default-tooltip {
-  background: #0F2825 !important;
-  border: 1px solid rgba(20,184,166,0.2) !important;
+  background: #1C1A17 !important;
+  border: 1px solid rgba(200,195,185,0.12) !important;
   border-radius: 8px !important;
 }
 
-/* ─── Keyframes ─── */
-@keyframes fadeUp    { from { opacity:0; transform:translateY(40px); } to { opacity:1; transform:translateY(0); } }
-@keyframes fadeIn    { from { opacity:0; } to { opacity:1; } }
-@keyframes slideLeft { from { opacity:0; transform:translateX(60px); } to { opacity:1; transform:translateX(0); } }
-@keyframes shimmer   { from { background-position:-200% 0; } to { background-position:200% 0; } }
-@keyframes glowPulse { 0%,100% { opacity:0.4; transform:scale(1); } 50% { opacity:0.8; transform:scale(1.05); } }
-@keyframes float     { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-12px); } }
-@keyframes ticker    { from { transform:translateX(0); } to { transform:translateX(-50%); } }
-@keyframes lineGrow  { from { width:0%; } to { width:100%; } }
-@keyframes borderGlow {
-  0%,100% { box-shadow:0 0 0 1px rgba(20,184,166,0.2); }
-  50%     { box-shadow:0 0 0 2px rgba(20,184,166,0.5), 0 0 20px rgba(20,184,166,0.1); }
-}
+/* ── Keyframes ── */
+@keyframes fadeUp  { from { opacity:0; transform:translateY(32px); } to { opacity:1; transform:translateY(0); } }
+@keyframes fadeIn  { from { opacity:0; } to { opacity:1; } }
+@keyframes shimmer { from { background-position:-200% 0; } to { background-position:200% 0; } }
+@keyframes float   { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-10px); } }
+@keyframes ticker  { from { transform:translateX(0); } to { transform:translateX(-50%); } }
 
 @layer base {
   * { border-color: hsl(var(--border-var)); }
