@@ -4,7 +4,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { CheckCircle, Phone, Mail, MapPin, Loader2 } from "lucide-react";
 import { LiquidButton } from "@/components/ui/liquid-glass-button";
-import { COMPANY, TESTIMONIALS } from "@/lib/site-content";
+import { COMPANY, EXPERIENCE } from "@/lib/site-content";
 
 const SERVICES_LIST = [
   "Growth Strategy",
@@ -32,14 +32,13 @@ export default function CTASection() {
     setSubmitted(true);
   };
 
-  const t = TESTIMONIALS[0];
+  const exp = EXPERIENCE[1];
 
   return (
     <section id="contact" className="relative py-32 overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-catalyst-base to-catalyst-deep" aria-hidden />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
-        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -59,7 +58,6 @@ export default function CTASection() {
         </motion.div>
 
         <div className="grid lg:grid-cols-[1fr_360px] gap-8 max-w-5xl mx-auto">
-          {/* Form */}
           <motion.div
             initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -99,7 +97,6 @@ export default function CTASection() {
                   ))}
                 </div>
 
-                {/* Service selector */}
                 <div>
                   <p className="text-[10px] font-semibold uppercase tracking-[0.15em] text-white/25 mb-3">
                     Services of Interest
@@ -136,12 +133,7 @@ export default function CTASection() {
                   />
                 </div>
 
-                <LiquidButton
-                  type="submit"
-                  disabled={loading}
-                  size="xl"
-                  className="w-full"
-                >
+                <LiquidButton type="submit" disabled={loading} size="xl" className="w-full">
                   {loading ? (
                     <><Loader2 size={15} className="animate-spin" /> Submitting…</>
                   ) : (
@@ -152,7 +144,6 @@ export default function CTASection() {
             )}
           </motion.div>
 
-          {/* Contact info */}
           <motion.div
             initial={{ opacity: 0, x: 40 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -182,33 +173,19 @@ export default function CTASection() {
               </div>
             ))}
 
-            {/* Guarantee */}
             <div className="glass-card p-6">
               <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-accent-600 mb-3">Our Guarantee</p>
-              <p className="text-[13px] text-white/30 leading-relaxed">
-                {COMPANY.guarantee}
-              </p>
+              <p className="text-[13px] text-white/30 leading-relaxed">{COMPANY.guarantee}</p>
             </div>
 
-            {/* Testimonial */}
+            {/* Experience card */}
             <div className="glass-card p-6">
-              <div className="flex gap-1 mb-3">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <span key={i} className="text-accent-500/60 text-sm">★</span>
-                ))}
-              </div>
-              <p className="text-[12px] text-white/25 italic leading-relaxed mb-4">
-                {t.quote}
+              <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-accent-600 mb-3">
+                Founder Background
               </p>
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-full bg-accent-400/10 border border-accent-400/15 flex items-center justify-center text-[11px] font-bold text-accent-500">
-                  {t.initials}
-                </div>
-                <div>
-                  <p className="text-[12px] font-medium text-white/60">{t.name}</p>
-                  <p className="text-[11px] text-white/25">{t.role}</p>
-                </div>
-              </div>
+              <p className="text-[13px] font-bold text-white/70 mb-1">{exp.title}</p>
+              <p className="text-[11px] text-accent-600 mb-3">{exp.company}</p>
+              <p className="text-[12px] text-white/30 leading-relaxed">{exp.detail}</p>
             </div>
           </motion.div>
         </div>

@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, ChevronRight } from "lucide-react";
 import { LiquidButton } from "@/components/ui/liquid-glass-button";
-import { TESTIMONIALS } from "@/lib/site-content";
+import { EXPERIENCE } from "@/lib/site-content";
 
 const ROTATING_WORDS = [
   "Revenue",
@@ -30,7 +30,7 @@ export default function AnimatedHeroSection() {
     return () => clearInterval(id);
   }, []);
 
-  const t = TESTIMONIALS[1];
+  const exp = EXPERIENCE[0];
 
   return (
     <section className="relative py-32 overflow-hidden border-t border-white/[0.04]">
@@ -46,7 +46,6 @@ export default function AnimatedHeroSection() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
 
-          {/* Left — animated headline */}
           <motion.div
             initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -100,7 +99,6 @@ export default function AnimatedHeroSection() {
             </div>
           </motion.div>
 
-          {/* Right — feature list */}
           <motion.div
             initial={{ opacity: 0, x: 40 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -132,7 +130,7 @@ export default function AnimatedHeroSection() {
               </motion.div>
             ))}
 
-            {/* Quote block */}
+            {/* Experience block */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -140,18 +138,12 @@ export default function AnimatedHeroSection() {
               transition={{ duration: 0.6, delay: 0.5 }}
               className="glass-card px-6 py-5 mt-2"
             >
-              <p className="text-[13px] text-white/30 italic leading-relaxed mb-4">
-                {t.quote}
+              <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-accent-600 mb-2">
+                Founder Background
               </p>
-              <div className="flex items-center gap-3">
-                <div className="w-7 h-7 rounded-full bg-accent-400/10 border border-accent-400/15 flex items-center justify-center text-[10px] font-bold text-accent-500">
-                  {t.initials}
-                </div>
-                <div>
-                  <p className="text-[12px] font-medium text-white/55">{t.name}</p>
-                  <p className="text-[10px] text-white/25">{t.role}</p>
-                </div>
-              </div>
+              <p className="text-[13px] font-bold text-white/70 mb-1">{exp.title}</p>
+              <p className="text-[11px] text-accent-600 mb-3">{exp.company}</p>
+              <p className="text-[12px] text-white/30 leading-relaxed">{exp.detail}</p>
             </motion.div>
           </motion.div>
         </div>

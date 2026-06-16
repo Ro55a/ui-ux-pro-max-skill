@@ -1,6 +1,6 @@
 // ─────────────────────────────────────────────────────────────────────────────
 // SITE CONTENT — edit everything in this file to customise the website.
-// All placeholder data, testimonials, stats, and demo figures live here.
+// All placeholder data, stats, experience, and demo figures live here.
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { TrendingUp, Shield, Zap, Globe, Users, DollarSign } from "lucide-react";
@@ -25,38 +25,34 @@ export const HERO_BADGES = [
   { icon: Zap,        label: "Results in 30 days"           },
 ];
 
-// ── Stats / Results section ───────────────────────────────────────────────────
-// Replace these with your real figures.
+// ── Stats / Background section ────────────────────────────────────────────────
+// value can be any string — a number, firm name, certification, anything.
 
 export const STATS = [
-  { value: 340, suffix: "%", label: "Average revenue growth within 12 months",   prefix: "+" },
-  { value: 127, suffix: "+", label: "Startups and SMEs advised across Europe",    prefix: ""  },
-  { value: 30,  suffix: "d", label: "Time to first measurable result",             prefix: ""  },
-  { value: 4.9, suffix: "",  label: "Average client satisfaction score out of 5", prefix: ""  },
+  { value: "Bank of England",   label: "Regulatory frameworks applied"   },
+  { value: "Prince2 Certified", label: "Project delivery methodology"    },
+  { value: "30 Days",           label: "To your first deliverable"       },
+  { value: "Big 4 Grade",       label: "Analysis and reporting standard" },
 ];
 
-// ── Testimonials ──────────────────────────────────────────────────────────────
-// Replace name/role/quote with real client testimonials.
+// ── Experience / credentials ────────────────────────────────────────────────
+// Shown in the AnimatedHeroSection block (index 0) and CTASection sidebar (index 1).
+// Edit title, company, and detail freely.
 
-export const TESTIMONIALS = [
+export const EXPERIENCE = [
   {
-    initials: "SK",
-    name:     "Sarah K.",
-    role:     "CEO, FlowStack (Series A, £4M)",
-    quote:    `"Catalyst identified a pricing flaw costing us £180K/yr in the first week.
-               Six months later we'd tripled MRR and closed our Series A."`,
+    title:   "Project Management",
+    company: "Major UK Consulting Firm",
+    detail:  "Led cross-functional delivery teams on client engagements across financial services, managing stakeholders from C-suite to front-line.",
   },
   {
-    initials: "JM",
-    name:     "James M.",
-    role:     "CTO, Meridian Labs (Series B, £12M)",
-    quote:    `"Catalyst compressed 18 months of strategic planning into 6 weeks
-               and gave us the clarity to close our Series B with confidence."`,
+    title:   "Finance & Banking",
+    company: "UK Banking Sector",
+    detail:  "Worked across finance and banking operations, building deep familiarity with regulatory frameworks, risk, and financial reporting standards.",
   },
 ];
 
 // ── Dashboard demo metrics (HeroScroll / live platform mockup) ────────────────
-// These numbers are shown inside the ContainerScroll dashboard animation.
 
 export const DASHBOARD_METRICS = [
   { label: "MRR",        value: "£108K", delta: "+23%",  up: true  },
@@ -79,7 +75,6 @@ export const DASHBOARD_INSIGHT =
   "December MRR spike driven by Q4 enterprise deals — retention programme needed to sustain growth trajectory.";
 
 // ── Financial Analyzer demo data ──────────────────────────────────────────────
-// Shown before a user uploads their own spreadsheet.
 
 export const DEMO_REVENUE = [
   { month: "Jan", revenue: 42000,  expenses: 31000, profit: 11000 },
@@ -171,7 +166,6 @@ export const COMPETITORS = [
 ];
 
 // ── Business Intelligence mock profile ────────────────────────────────────────
-// Shown as a demo result when a user searches a company name.
 
 export const MOCK_PROFILE = {
   industry:     "SaaS / B2B Software",
