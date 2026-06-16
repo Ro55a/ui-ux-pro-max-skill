@@ -1,95 +1,105 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { Slot } from "@radix-ui/react-slot"
-import { cva, type VariantProps } from "class-variance-authority"
-import { cn } from "@/lib/utils"
+import * as React from "react";
+import { cva, type VariantProps } from "class-variance-authority";
+import { cn } from "@/lib/utils";
 
-// ── Liquid Glass Button ──────────────────────────────────────────────────────
-
-const liquidbuttonVariants = cva(
-  "inline-flex items-center transition-colors justify-center cursor-pointer gap-2 whitespace-nowrap rounded-md text-sm font-medium disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none",
+export const liquidbuttonVariants = cva(
+  [
+    "relative inline-flex items-center justify-center font-semibold tracking-wide",
+    "transition-all duration-300 cursor-pointer select-none",
+    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-400/40",
+    "disabled:pointer-events-none disabled:opacity-50",
+  ],
   {
     variants: {
       variant: {
-        default:     "bg-transparent hover:scale-105 duration-300 transition text-accent-300",
-        destructive: "bg-destructive text-white hover:bg-destructive/90",
-        outline:     "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
-        secondary:   "bg-secondary text-secondary-foreground hover:bg-secondary/80",
-        ghost:       "hover:bg-accent hover:text-accent-foreground",
-        link:        "text-primary underline-offset-4 hover:underline",
+        default:  "text-catalyst-base",
+        outline:  "text-accent-400 bg-transparent border border-accent-400/30 hover:border-accent-400/60",
+        ghost:    "text-white/70 hover:text-white bg-white/[0.04] hover:bg-white/[0.07]",
       },
       size: {
-        default: "h-9 px-4 py-2",
-        sm:      "h-8 text-xs gap-1.5 px-4",
-        lg:      "h-10 rounded-md px-6",
-        xl:      "h-12 rounded-md px-8",
-        xxl:     "h-14 rounded-md px-10",
-        icon:    "size-9",
+        sm:  "h-9  px-5 text-[11px] rounded-full gap-1.5",
+        md:  "h-11 px-7 text-[12px] rounded-full gap-2",
+        lg:  "h-12 px-8 text-[13px] rounded-full gap-2",
+        xl:  "h-14 px-10 text-[13px] rounded-full gap-2.5",
       },
     },
-    defaultVariants: {
-      variant: "default",
-      size: "xl",
-    },
-  }
-)
+    defaultVariants: { variant: "default", size: "lg" },
+  },
+);
 
-function LiquidButton({
-  className,
-  variant,
-  size,
-  asChild = false,
-  children,
-  ...props
-}: React.ComponentProps<"button"> &
-  VariantProps<typeof liquidbuttonVariants> & {
-    asChild?: boolean
-  }) {
-  const Comp = asChild ? Slot : "button"
-
+export function GlassFilter() {
   return (
-    <Comp
-      data-slot="button"
-      className={cn(
-        "relative",
-        liquidbuttonVariants({ variant, size, className })
-      )}
-      {...props}
+    <svg
+      aria-hidden
+      style={{ position: "absolute", width: 0, height: 0, overflow: "hidden" }}
     >
-      {/* Glass morphism shadow shell */}
-      <div className="absolute top-0 left-0 z-0 h-full w-full rounded-full
-        shadow-[0_0_6px_rgba(0,0,0,0.03),0_2px_6px_rgba(0,0,0,0.08),inset_3px_3px_0.5px_-3px_rgba(0,0,0,0.9),inset_-3px_-3px_0.5px_-3px_rgba(0,0,0,0.85),inset_1px_1px_1px_-0.5px_rgba(0,0,0,0.6),inset_-1px_-1px_1px_-0.5px_rgba(0,0,0,0.6),inset_0_0_6px_6px_rgba(0,0,0,0.12),inset_0_0_2px_2px_rgba(0,0,0,0.06),0_0_12px_rgba(255,255,255,0.08)]
-        dark:shadow-[0_0_8px_rgba(0,0,0,0.03),0_2px_6px_rgba(0,0,0,0.08),inset_3px_3px_0.5px_-3.5px_rgba(255,255,255,0.09),inset_-3px_-3px_0.5px_-3.5px_rgba(255,255,255,0.85),inset_1px_1px_1px_-0.5px_rgba(255,255,255,0.6),inset_-1px_-1px_1px_-0.5px_rgba(255,255,255,0.6),inset_0_0_6px_6px_rgba(255,255,255,0.12),inset_0_0_2px_2px_rgba(255,255,255,0.06),0_0_12px_rgba(0,0,0,0.15)]
-        transition-all" />
-
-      {/* Backdrop glass distortion layer */}
-      <div
-        className="absolute top-0 left-0 isolate -z-10 h-full w-full overflow-hidden rounded-full"
-        style={{ backdropFilter: 'url("#catalyst-glass")' }}
-      />
-
-      <div className="pointer-events-none z-10">{children}</div>
-
-      <GlassFilter />
-    </Comp>
-  )
-}
-
-function GlassFilter() {
-  return (
-    <svg className="hidden">
       <defs>
-        <filter id="catalyst-glass" x="0%" y="0%" width="100%" height="100%" colorInterpolationFilters="sRGB">
-          <feTurbulence type="fractalNoise" baseFrequency="0.05 0.05" numOctaves="1" seed="2" result="turbulence" />
-          <feGaussianBlur in="turbulence" stdDeviation="2" result="blurredNoise" />
-          <feDisplacementMap in="SourceGraphic" in2="blurredNoise" scale="60" xChannelSelector="R" yChannelSelector="B" result="displaced" />
-          <feGaussianBlur in="displaced" stdDeviation="3" result="finalBlur" />
-          <feComposite in="finalBlur" in2="finalBlur" operator="over" />
+        <filter id="catalyst-glass" x="-20%" y="-20%" width="140%" height="140%"
+          colorInterpolationFilters="sRGB">
+          <feTurbulence
+            type="fractalNoise"
+            baseFrequency="0.65 0.65"
+            numOctaves="3"
+            seed="5"
+            result="noise"
+          />
+          <feDisplacementMap
+            in="SourceGraphic"
+            in2="noise"
+            scale="6"
+            xChannelSelector="R"
+            yChannelSelector="G"
+            result="displaced"
+          />
+          <feComposite in="displaced" in2="SourceGraphic" operator="in" />
         </filter>
       </defs>
     </svg>
-  )
+  );
 }
 
-export { LiquidButton, liquidbuttonVariants }
+export interface LiquidButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+    VariantProps<typeof liquidbuttonVariants> {
+  asChild?: boolean;
+}
+
+export const LiquidButton = React.forwardRef<HTMLButtonElement, LiquidButtonProps>(
+  ({ className, variant = "default", size = "lg", children, ...props }, ref) => {
+    return (
+      <>
+        <GlassFilter />
+        <button
+          ref={ref}
+          className={cn("group overflow-hidden", liquidbuttonVariants({ variant, size }), className)}
+          {...props}
+        >
+          {variant === "default" && (
+            <span
+              aria-hidden
+              className="absolute inset-0 rounded-[inherit]"
+              style={{
+                background: "linear-gradient(135deg, rgba(240,237,232,0.92) 0%, rgba(196,188,174,0.88) 100%)",
+                filter: "url(#catalyst-glass)",
+              }}
+            />
+          )}
+          {variant === "default" && (
+            <span
+              aria-hidden
+              className="absolute inset-0 rounded-[inherit] opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              style={{
+                background:
+                  "linear-gradient(120deg, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0) 60%)",
+              }}
+            />
+          )}
+          <span className="relative z-10 flex items-center gap-[inherit]">{children}</span>
+        </button>
+      </>
+    );
+  },
+);
+LiquidButton.displayName = "LiquidButton";

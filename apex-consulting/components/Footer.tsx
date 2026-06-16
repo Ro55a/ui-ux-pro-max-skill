@@ -1,74 +1,34 @@
-import Link from "next/link";
-import { COMPANY } from "@/content/site.config";
-
-const NAV_LINKS = [
-  { label: "Services",     href: "/#services"    },
-  { label: "Intelligence", href: "/#intelligence" },
-  { label: "Analytics",   href: "/#analytics"    },
-  { label: "Contact",     href: "/#contact"      },
-];
-
-const LEGAL_LINKS = [
-  { label: "Privacy Policy",   href: "/privacy" },
-  { label: "Terms of Service", href: "/terms"   },
-  { label: "Cookie Policy",    href: "/cookies" },
-];
-
 export default function Footer() {
-  const year = new Date().getFullYear();
-
   return (
-    <footer className="border-t border-white/[0.05]">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 pt-14 pb-10">
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-10 mb-12">
-          {/* Brand */}
-          <div>
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-7 h-7 rounded-md bg-gradient-to-br from-accent-700 to-accent-400 flex items-center justify-center">
-                <span className="text-catalyst-deep font-black text-[11px]">C</span>
-              </div>
-              <span className="text-[14px] font-bold text-white tracking-tight">{COMPANY.brandName}</span>
-            </div>
-            <p className="text-[12px] text-stone-600 leading-relaxed max-w-[220px]">
-              Independent business advisory for founders and management teams.
-            </p>
-          </div>
+    <footer className="border-t border-white/[0.04] py-14">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-6">
+        <a href="#" className="flex items-center gap-3" aria-label="Catalyst & Co. home">
+          <svg width="24" height="24" viewBox="0 0 36 36" fill="none" aria-hidden>
+            <path
+              d="M 25 8 A 11.5 11.5 0 1 0 25 28"
+              stroke="#9E9890"
+              strokeWidth="1.1"
+              fill="none"
+              strokeLinecap="round"
+            />
+            <path d="M 27 18 L 25 15.8 L 23 18 L 25 20.2 Z" fill="#9E9890" />
+            <line x1="27" y1="18" x2="35" y2="18" stroke="#9E9890" strokeWidth="0.7" strokeLinecap="round" />
+          </svg>
+          <span className="text-[11px] font-light tracking-[0.22em] uppercase text-accent-700">
+            Catalyst &amp; Co.
+          </span>
+        </a>
 
-          {/* Nav */}
-          <div>
-            <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-stone-600 mb-4">Site</p>
-            <ul className="space-y-2.5">
-              {NAV_LINKS.map((l) => (
-                <li key={l.href}><Link href={l.href} className="text-[13px] text-stone-500 hover:text-white transition-colors">{l.label}</Link></li>
-              ))}
-            </ul>
-          </div>
+        <p className="text-[11px] text-white/15 tracking-wide">
+          © {new Date().getFullYear()} Catalyst &amp; Co. Ltd. All rights reserved. Registered in England &amp; Wales.
+        </p>
 
-          {/* Legal */}
-          <div>
-            <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-stone-600 mb-4">Legal</p>
-            <ul className="space-y-2.5">
-              {LEGAL_LINKS.map((l) => (
-                <li key={l.href}><Link href={l.href} className="text-[13px] text-stone-500 hover:text-white transition-colors">{l.label}</Link></li>
-              ))}
-            </ul>
-            {COMPANY.linkedin && (
-              <a href={COMPANY.linkedin} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 mt-5 text-[12px] text-stone-600 hover:text-white transition-colors">
-                LinkedIn
-                <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden>
-                  <path d="M1 9L9 1M9 1H3M9 1V7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </a>
-            )}
-          </div>
-        </div>
-
-        <div className="pt-6 border-t border-white/[0.04] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-          <p className="text-[11px] text-stone-700">© {year} {COMPANY.name}. All rights reserved.</p>
-          <p className="text-[11px] text-stone-700">
-            Registered in England &amp; Wales · Co. No. {COMPANY.registrationNumber}
-            {COMPANY.vatNumber ? ` · VAT ${COMPANY.vatNumber}` : ""}
-          </p>
+        <div className="flex gap-6">
+          {["Privacy", "Terms", "Cookies"].map((l) => (
+            <a key={l} href="#" className="text-[11px] text-white/15 hover:text-white/40 transition-colors tracking-wide">
+              {l}
+            </a>
+          ))}
         </div>
       </div>
     </footer>
