@@ -3,7 +3,18 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  :root {
+    --color-1: 330 100% 40%;
+    --color-2: 140 100% 55%;
+    --color-3: 210 100% 30%;
+    --color-4: 60 100% 70%;
+    --color-5: 295 100% 45%;
+  }
+}
+
 :root {
+  /* shadcn-compatible CSS variables */
   --background: 20 10% 4%;
   --foreground: 38 15% 92%;
   --primary: 38 20% 82%;
@@ -61,140 +72,37 @@ body::after {
   );
   background-size: 200% auto;
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
   background-clip: text;
+  -webkit-text-fill-color: transparent;
   animation: shimmer 4s linear infinite;
 }
-
-.gold-shimmer { @apply accent-shimmer; }
 
 /* ── Glass card ── */
 .glass-card {
   background: rgba(255, 255, 255, 0.025);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.065);
-  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 1.25rem;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
-.glass-card:hover {
-  background: rgba(255, 255, 255, 0.04);
-  border-color: rgba(208, 201, 188, 0.14);
-  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
-  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-/* ── Primary accent button (pill, outlined) ── */
-.btn-accent {
-  background: transparent;
-  border: 1px solid rgba(208, 201, 188, 0.28);
-  color: var(--accent-400);
-  font-weight: 600;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
-  font-size: 11px;
-  border-radius: 60px;
-  padding: 11px 28px;
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.btn-accent:hover {
-  background: rgba(208, 201, 188, 0.06);
-  border-color: rgba(208, 201, 188, 0.5);
-  box-shadow: 0 0 20px rgba(208, 201, 188, 0.08);
-}
-
-.btn-gold { @apply btn-accent; }
-
-/* ── Ghost button ── */
-.btn-ghost {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.09);
-  color: rgba(255, 255, 255, 0.7);
-  font-weight: 500;
-  border-radius: 60px;
-  padding: 11px 28px;
-  font-size: 13px;
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.btn-ghost:hover {
-  background: rgba(255, 255, 255, 0.06);
-  border-color: rgba(255, 255, 255, 0.16);
+/* ── Glow blob ── */
+.glow-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
 }
 
 /* ── Section divider ── */
 .section-divider {
-  width: 40px;
+  width: 32px;
   height: 1px;
-  background: rgba(208, 201, 188, 0.35);
-  margin-bottom: 28px;
+  background: linear-gradient(90deg, rgba(208,201,188,0.5), transparent);
+  margin-bottom: 1.5rem;
 }
-
-/* ── Blob glows ── */
-.glow-blob {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(110px);
-  pointer-events: none;
-}
-
-.noise::before { display: none; }
 
 /* ── Scrollbar ── */
-::-webkit-scrollbar { width: 3px; }
-::-webkit-scrollbar-track { background: var(--bg-deep); }
-::-webkit-scrollbar-thumb { background: rgba(208, 201, 188, 0.2); border-radius: 4px; }
-
-/* ── Chart theming ── */
-.recharts-cartesian-grid-horizontal line,
-.recharts-cartesian-grid-vertical line { stroke: rgba(255,255,255,0.04) !important; }
-.recharts-text { fill: #78716C !important; font-size: 11px !important; }
-.recharts-tooltip-wrapper .recharts-default-tooltip {
-  background: #1C1A17 !important;
-  border: 1px solid rgba(208,201,188,0.12) !important;
-  border-radius: 8px !important;
-}
-
-/* ── Keyframes ── */
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(40px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-@keyframes slideLeft {
-  from { opacity: 0; transform: translateX(60px); }
-  to   { opacity: 1; transform: translateX(0); }
-}
-@keyframes shimmer {
-  from { background-position: -200% 0; }
-  to   { background-position:  200% 0; }
-}
-@keyframes glowPulse {
-  0%,100% { opacity: 0.3; transform: scale(1); }
-  50%     { opacity: 0.6; transform: scale(1.04); }
-}
-@keyframes float {
-  0%,100% { transform: translateY(0); }
-  50%     { transform: translateY(-10px); }
-}
-@keyframes ticker {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
-}
-@keyframes lineGrow {
-  from { width: 0%; }
-  to   { width: 100%; }
-}
-@keyframes borderGlow {
-  0%,100% { box-shadow: 0 0 0 1px rgba(208,201,188,0.1); }
-  50%     { box-shadow: 0 0 0 1px rgba(208,201,188,0.25), 0 0 24px rgba(208,201,188,0.05); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    transition-duration: 0.01ms !important;
-  }
-}
+::-webkit-scrollbar       { width: 4px; }
+::-webkit-scrollbar-track { background: #0A0908; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 2px; }

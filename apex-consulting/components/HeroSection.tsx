@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { LiquidButton } from "@/components/ui/liquid-glass-button";
+import { GradientText } from "@/components/ui/gradient-text";
 import { HERO_BADGES } from "@/lib/site-content";
 
 const TICKER_ITEMS = [
@@ -58,7 +59,7 @@ export default function HeroSection() {
             >
               <span className="text-white/90">Scale Your</span>
               <br />
-              <span className="accent-shimmer">Business</span>
+              <GradientText className="accent-shimmer">Business</GradientText>
               <br />
               <span className="text-white/90">Without Limits</span>
             </motion.h1>
