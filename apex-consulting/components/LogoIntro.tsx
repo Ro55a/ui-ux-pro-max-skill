@@ -10,7 +10,6 @@ export default function LogoIntro() {
 
   useEffect(() => {
     document.body.style.overflow = "hidden";
-    // Show the "click to enter" prompt after the video has had a moment to play
     const t = setTimeout(() => setReady(true), 1200);
     return () => clearTimeout(t);
   }, []);
@@ -48,7 +47,7 @@ export default function LogoIntro() {
             }}
           />
 
-          {/* Video */}
+          {/* Video — mix-blend-mode:screen makes black transparent */}
           <div className="relative z-10 flex flex-col items-center gap-12">
             <video
               ref={videoRef}
@@ -59,7 +58,8 @@ export default function LogoIntro() {
               playsInline
               className="w-[min(540px,85vw)] object-contain"
               style={{
-                filter: "drop-shadow(0 0 60px rgba(208,201,188,0.12))",
+                mixBlendMode: "screen",
+                filter: "drop-shadow(0 0 40px rgba(208,201,188,0.15))",
               }}
             />
 
@@ -73,7 +73,6 @@ export default function LogoIntro() {
                   transition={{ duration: 0.7, ease: "easeOut" }}
                   className="flex flex-col items-center gap-3"
                 >
-                  {/* Pulsing dot */}
                   <motion.div
                     animate={{ opacity: [0.3, 1, 0.3] }}
                     transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
