@@ -1,17 +1,24 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import Image from "next/image";
 
 export default function LogoIntro() {
-  const [visible, setVisible] = useState(true);
+  const [entered, setEntered] = useState(false);
+  const [ready,   setReady]   = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     document.body.style.overflow = "hidden";
-    const timer = setTimeout(() => setVisible(false), 4000);
-    return () => clearTimeout(timer);
+    // Show the "click to enter" prompt after the video has had a moment to play
+    const t = setTimeout(() => setReady(true), 1200);
+    return () => clearTimeout(t);
   }, []);
+
+  const handleEnter = () => {
+    if (!ready) return;
+    setEntered(true);
+  };
 
   const handleExitComplete = () => {
     document.body.style.overflow = "";
@@ -19,85 +26,74 @@ export default function LogoIntro() {
 
   return (
     <AnimatePresence onExitComplete={handleExitComplete}>
-      {visible && (
+      {!entered && (
         <motion.div
-          key="logo-intro"
+          key="entry"
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.9, ease: "easeInOut" }}
-          className="fixed inset-0 z-[9999] flex items-center justify-center"
+          transition={{ duration: 1.1, ease: "easeInOut" }}
+          onClick={handleEnter}
+          className="fixed inset-0 z-[9999] flex flex-col items-center justify-center cursor-pointer select-none"
           style={{
-            perspective: "1200px",
-            // Gradient that starts as deep site tone and stays cohesive
             background:
               "radial-gradient(ellipse 100% 100% at 50% 50%, #161412 0%, #0F0E0C 45%, #0A0908 100%)",
           }}
         >
-          {/* Warm accent glow that matches site palette */}
+          {/* Vignette */}
           <div
             className="absolute inset-0 pointer-events-none"
             style={{
               background:
-                "radial-gradient(ellipse 55% 35% at 50% 50%, rgba(208,201,188,0.07) 0%, transparent 65%)",
+                "radial-gradient(ellipse 85% 85% at 50% 50%, transparent 35%, rgba(10,9,8,0.9) 100%)",
             }}
           />
 
-          {/* Vignette edges to soften into the site bg */}
-          <div
-            className="absolute inset-0 pointer-events-none"
-            style={{
-              background:
-                "radial-gradient(ellipse 90% 90% at 50% 50%, transparent 40%, rgba(10,9,8,0.85) 100%)",
-            }}
-          />
-
-          {/* Full 360° rotation — one complete spin then holds */}
-          <motion.div
-            initial={{ rotateY: 0, opacity: 0, scale: 0.88 }}
-            animate={{ rotateY: 360, opacity: 1, scale: 1 }}
-            transition={{
-              rotateY: { duration: 1.8, ease: [0.4, 0, 0.2, 1] },
-              opacity: { duration: 0.5, ease: "easeOut" },
-              scale:   { duration: 1.8, ease: [0.16, 1, 0.3, 1] },
-            }}
-            style={{ transformStyle: "preserve-3d" }}
-          >
-            {/* Slow idle rock after spin completes */}
-            <motion.div
-              animate={{ rotateY: [0, 5, -5, 0] }}
-              transition={{
-                rotateY: {
-                  delay: 1.9,
-                  duration: 2.4,
-                  ease: "easeInOut",
-                  repeat: Infinity,
-                  repeatType: "mirror",
-                },
+          {/* Video */}
+          <div className="relative z-10 flex flex-col items-center gap-12">
+            <video
+              ref={videoRef}
+              src="/logo-intro.mp4"
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="w-[min(540px,85vw)] object-contain"
+              style={{
+                filter: "drop-shadow(0 0 60px rgba(208,201,188,0.12))",
               }}
-              style={{ transformStyle: "preserve-3d" }}
-            >
-              <Image
-                src="/logo.jpg"
-                alt="Catalyst & Co."
-                width={520}
-                height={220}
-                priority
-                className="object-contain select-none"
-                style={{
-                  filter:
-                    "drop-shadow(0 0 60px rgba(208,201,188,0.14)) drop-shadow(0 0 20px rgba(208,201,188,0.08))",
-                }}
-              />
-            </motion.div>
-          </motion.div>
+            />
 
-          {/* Thin accent line fades in after spin */}
+            {/* Click to enter prompt */}
+            <AnimatePresence>
+              {ready && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.7, ease: "easeOut" }}
+                  className="flex flex-col items-center gap-3"
+                >
+                  {/* Pulsing dot */}
+                  <motion.div
+                    animate={{ opacity: [0.3, 1, 0.3] }}
+                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                    className="w-1 h-1 rounded-full bg-accent-500"
+                  />
+                  <p className="text-[11px] font-medium uppercase tracking-[0.3em] text-white/25">
+                    Click anywhere to enter
+                  </p>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+
+          {/* Thin bottom line */}
           <motion.div
             initial={{ scaleX: 0, opacity: 0 }}
             animate={{ scaleX: 1, opacity: 1 }}
-            transition={{ delay: 1.9, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="absolute bottom-12 left-1/2 -translate-x-1/2 w-24 h-px origin-left"
-            style={{ background: "rgba(208,201,188,0.25)" }}
+            transition={{ delay: 1.2, duration: 1.0, ease: [0.16, 1, 0.3, 1] }}
+            className="absolute bottom-10 left-1/2 -translate-x-1/2 w-20 h-px origin-left"
+            style={{ background: "rgba(208,201,188,0.2)" }}
           />
         </motion.div>
       )}
