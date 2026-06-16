@@ -15,8 +15,8 @@ export default function Home() {
   return (
     <main className="bg-catalyst-deep min-h-screen">
       <Navigation />
-      <HeroSection />
       <HeroScroll />
+      <HeroSection />
       <DisplayCards />
       <AnimatedHeroSection />
       {/* #services */}
