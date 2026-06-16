@@ -1,41 +1,23 @@
 "use client";
 
-import { useState, useRef, useCallback } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   AreaChart, Area, BarChart, Bar, XAxis, YAxis,
   CartesianGrid, Tooltip, ResponsiveContainer,
 } from "recharts";
-import {
-  Upload, FileSpreadsheet, TrendingUp, AlertCircle,
-  Loader2, ChevronRight,
-} from "lucide-react";
+import { TrendingUp, AlertCircle, ArrowRight } from "lucide-react";
 import { LiquidButton } from "@/components/ui/liquid-glass-button";
 import { DEMO_REVENUE, DEMO_KPI, DEMO_INSIGHTS } from "@/lib/site-content";
 
+const HOW_IT_WORKS = [
+  { num: "01", text: "Send us your P&L, cash-flow statement, or revenue sheet — any format works." },
+  { num: "02", text: "Our team runs a full CFO-grade analysis, typically within 24 hours." },
+  { num: "03", text: "You receive a clear breakdown: margin trends, burn anomalies, and priority actions." },
+];
+
 export default function FinancialAnalyzer() {
-  const [data,     setData]     = useState(DEMO_REVENUE);
-  const [loading,  setLoading]  = useState(false);
-  const [fileName, setFileName] = useState<string | null>(null);
-  const [tab,      setTab]      = useState<"revenue" | "bar">("revenue");
-  const inputRef = useRef<HTMLInputElement>(null);
-
-  const handleFile = useCallback(async (file: File) => {
-    setLoading(true);
-    setFileName(file.name);
-    await new Promise((r) => setTimeout(r, 1600));
-    // In production this calls a CSV/XLSX parse API route.
-    setLoading(false);
-  }, []);
-
-  const onDrop = useCallback(
-    (e: React.DragEvent) => {
-      e.preventDefault();
-      const file = e.dataTransfer.files[0];
-      if (file) handleFile(file);
-    },
-    [handleFile],
-  );
+  const [tab, setTab] = useState<"revenue" | "bar">("revenue");
 
   return (
     <section id="analytics" className="relative py-32 overflow-hidden">
@@ -55,16 +37,17 @@ export default function FinancialAnalyzer() {
             Financial Intelligence
           </p>
           <h2 className="text-[clamp(2rem,5vw,3.5rem)] font-black tracking-[-0.035em] text-white mb-6 leading-[1.05]">
-            Upload a spreadsheet.{" "}
-            <span className="accent-shimmer">Get instant CFO-grade analysis.</span>
+            Send us your numbers.{" "}
+            <span className="accent-shimmer">We do the rest.</span>
           </h2>
           <p className="text-stone-400 text-lg leading-relaxed">
-            Drop in a P&amp;L, cash-flow statement, or revenue sheet. Our engine
-            surfaces margin trends, burn anomalies, and growth inflexion points in seconds.
+            Share your financial data and our team delivers institutional-grade analysis —
+            margin trends, burn anomalies, and growth inflexion points — straight to your inbox.
+            Here’s the kind of insight we surface.
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-[1fr_380px] gap-6">
+        <div className="grid lg:grid-cols-[1fr_360px] gap-6">
           {/* ── Left: chart panel ── */}
           <motion.div
             initial={{ opacity: 0, x: -40 }}
@@ -113,7 +96,7 @@ export default function FinancialAnalyzer() {
               >
                 <ResponsiveContainer width="100%" height="100%">
                   {tab === "revenue" ? (
-                    <AreaChart data={data} margin={{ top: 4, right: 4, left: -16, bottom: 0 }}>
+                    <AreaChart data={DEMO_REVENUE} margin={{ top: 4, right: 4, left: -16, bottom: 0 }}>
                       <defs>
                         <linearGradient id="rev" x1="0" y1="0" x2="0" y2="1">
                           <stop offset="0%" stopColor="#F59E0B" stopOpacity={0.3} />
@@ -137,7 +120,7 @@ export default function FinancialAnalyzer() {
                       <Area type="monotone" dataKey="expenses" stroke="#EF4444" fill="url(#exp)" strokeWidth={2} dot={false} />
                     </AreaChart>
                   ) : (
-                    <BarChart data={data} margin={{ top: 4, right: 4, left: -16, bottom: 0 }}>
+                    <BarChart data={DEMO_REVENUE} margin={{ top: 4, right: 4, left: -16, bottom: 0 }}>
                       <CartesianGrid strokeDasharray="3 3" />
                       <XAxis dataKey="month" tick={{ fontSize: 11 }} />
                       <YAxis tick={{ fontSize: 11 }} tickFormatter={(v) => `£${v / 1000}k`} />
@@ -148,10 +131,10 @@ export default function FinancialAnalyzer() {
                         itemStyle={{ color: "#A8A29E" }}
                       />
                       <Bar dataKey="profit" radius={[4, 4, 0, 0]}>
-                        {data.map((_, i) => (
+                        {DEMO_REVENUE.map((_, i) => (
                           <rect
                             key={i}
-                            fill={`rgba(245,158,11,${0.3 + (i / data.length) * 0.7})`}
+                            fill={`rgba(245,158,11,${0.3 + (i / DEMO_REVENUE.length) * 0.7})`}
                           />
                         ))}
                       </Bar>
@@ -160,9 +143,13 @@ export default function FinancialAnalyzer() {
                 </ResponsiveContainer>
               </motion.div>
             </AnimatePresence>
+
+            <p className="text-[11px] text-stone-600 mt-4 text-center">
+              Example output — based on a real client engagement. Your report will reflect your actual data.
+            </p>
           </motion.div>
 
-          {/* ── Right: upload + insights ── */}
+          {/* ── Right: how it works + insights ── */}
           <motion.div
             initial={{ opacity: 0, x: 40 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -170,44 +157,34 @@ export default function FinancialAnalyzer() {
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
             className="flex flex-col gap-4"
           >
-            {/* Drop zone */}
-            <div
-              onDrop={onDrop}
-              onDragOver={(e) => e.preventDefault()}
-              onClick={() => inputRef.current?.click()}
-              className="glass-card p-8 flex flex-col items-center justify-center gap-4 cursor-pointer border-dashed border-2 border-white/10 hover:border-accent-400/25 transition-colors duration-300 min-h-[160px]"
-            >
-              <input
-                ref={inputRef}
-                type="file"
-                accept=".csv,.xlsx,.xls"
-                className="hidden"
-                onChange={(e) => e.target.files?.[0] && handleFile(e.target.files[0])}
-              />
-              {loading ? (
-                <Loader2 size={28} className="text-accent-400 animate-spin" />
-              ) : (
-                <Upload size={28} className="text-stone-500" />
-              )}
-              <div className="text-center">
-                <p className="text-[13px] font-semibold text-white">
-                  {loading ? "Analysing…" : fileName ? fileName : "Drop your spreadsheet here"}
-                </p>
-                <p className="text-[11px] text-stone-500 mt-1">
-                  {loading ? "Running CFO-grade analysis" : "CSV, XLSX, XLS · up to 50 MB"}
-                </p>
+            {/* How it works */}
+            <div className="glass-card p-6">
+              <p className="text-[11px] font-semibold uppercase tracking-widest text-stone-500 mb-5">
+                How it works
+              </p>
+              <div className="space-y-4">
+                {HOW_IT_WORKS.map(({ num, text }) => (
+                  <div key={num} className="flex gap-4">
+                    <span className="text-[11px] font-black text-accent-600 tracking-widest shrink-0 mt-0.5">{num}</span>
+                    <div className="w-px bg-white/[0.06] shrink-0" />
+                    <p className="text-[13px] text-stone-400 leading-relaxed">{text}</p>
+                  </div>
+                ))}
               </div>
-              {!loading && (
-                <div className="flex items-center gap-1.5 text-[12px] font-semibold text-accent-500">
-                  <FileSpreadsheet size={14} /> Browse files
-                </div>
-              )}
+
+              <LiquidButton
+                size="md"
+                className="mt-6 w-full"
+                onClick={() => { window.location.hash = "#contact"; }}
+              >
+                Send us your financials <ArrowRight size={13} />
+              </LiquidButton>
             </div>
 
             {/* Insights */}
             <div className="glass-card p-5 flex-1">
               <p className="text-[11px] font-semibold uppercase tracking-widest text-stone-500 mb-4">
-                AI Insights
+                Example insights we surface
               </p>
               <div className="space-y-3">
                 {DEMO_INSIGHTS.map(({ type, insight }) => (
@@ -228,14 +205,6 @@ export default function FinancialAnalyzer() {
                   </div>
                 ))}
               </div>
-
-              <LiquidButton
-                size="md"
-                className="mt-5 w-full"
-                onClick={() => { window.location.hash = "#contact"; }}
-              >
-                Get full advisory report <ChevronRight size={13} />
-              </LiquidButton>
             </div>
           </motion.div>
         </div>
