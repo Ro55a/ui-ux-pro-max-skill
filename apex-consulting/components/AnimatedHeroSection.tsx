@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, ChevronRight } from "lucide-react";
 import { LiquidButton } from "@/components/ui/liquid-glass-button";
+import { TESTIMONIALS } from "@/lib/site-content";
 
 const ROTATING_WORDS = [
   "Revenue",
@@ -29,11 +30,16 @@ export default function AnimatedHeroSection() {
     return () => clearInterval(id);
   }, []);
 
+  const t = TESTIMONIALS[1];
+
   return (
     <section className="relative py-32 overflow-hidden border-t border-white/[0.04]">
       <div
         className="absolute inset-0 pointer-events-none"
-        style={{ background: "radial-gradient(ellipse 80% 40% at 50% 0%, rgba(208,201,188,0.035) 0%, transparent 70%)" }}
+        style={{
+          background:
+            "radial-gradient(ellipse 80% 40% at 50% 0%, rgba(208,201,188,0.035) 0%, transparent 70%)",
+        }}
         aria-hidden
       />
 
@@ -84,7 +90,11 @@ export default function AnimatedHeroSection() {
               <LiquidButton size="lg" onClick={() => { window.location.hash = "#contact"; }}>
                 Start the conversation <ArrowRight size={14} />
               </LiquidButton>
-              <LiquidButton variant="outline" size="lg" onClick={() => { window.location.hash = "#services"; }}>
+              <LiquidButton
+                variant="outline"
+                size="lg"
+                onClick={() => { window.location.hash = "#services"; }}
+              >
                 View services
               </LiquidButton>
             </div>
@@ -108,13 +118,21 @@ export default function AnimatedHeroSection() {
                 className="glass-card px-6 py-5 flex items-center gap-5 group cursor-pointer"
                 onClick={() => { window.location.hash = "#services"; }}
               >
-                <span className="text-[11px] font-black text-accent-600 tracking-widest shrink-0">{num}</span>
+                <span className="text-[11px] font-black text-accent-600 tracking-widest shrink-0">
+                  {num}
+                </span>
                 <div className="w-px h-6 bg-white/[0.07] shrink-0" />
-                <span className="text-[14px] text-white/60 font-medium group-hover:text-white/85 transition-colors duration-200 flex-1">{label}</span>
-                <ChevronRight size={14} className="text-white/15 group-hover:text-accent-500 group-hover:translate-x-1 transition-all duration-200" />
+                <span className="text-[14px] text-white/60 font-medium group-hover:text-white/85 transition-colors duration-200 flex-1">
+                  {label}
+                </span>
+                <ChevronRight
+                  size={14}
+                  className="text-white/15 group-hover:text-accent-500 group-hover:translate-x-1 transition-all duration-200"
+                />
               </motion.div>
             ))}
 
+            {/* Quote block */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -123,14 +141,15 @@ export default function AnimatedHeroSection() {
               className="glass-card px-6 py-5 mt-2"
             >
               <p className="text-[13px] text-white/30 italic leading-relaxed mb-4">
-                &quot;Catalyst compressed 18 months of strategic planning into 6 weeks
-                and gave us the clarity to close our Series B with confidence.&quot;
+                {t.quote}
               </p>
               <div className="flex items-center gap-3">
-                <div className="w-7 h-7 rounded-full bg-accent-400/10 border border-accent-400/15 flex items-center justify-center text-[10px] font-bold text-accent-500">JM</div>
+                <div className="w-7 h-7 rounded-full bg-accent-400/10 border border-accent-400/15 flex items-center justify-center text-[10px] font-bold text-accent-500">
+                  {t.initials}
+                </div>
                 <div>
-                  <p className="text-[12px] font-medium text-white/55">James M.</p>
-                  <p className="text-[10px] text-white/25">CTO, Meridian Labs (Series B, £12M)</p>
+                  <p className="text-[12px] font-medium text-white/55">{t.name}</p>
+                  <p className="text-[10px] text-white/25">{t.role}</p>
                 </div>
               </div>
             </motion.div>

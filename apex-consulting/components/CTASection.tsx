@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { CheckCircle, Phone, Mail, MapPin, Loader2 } from "lucide-react";
 import { LiquidButton } from "@/components/ui/liquid-glass-button";
+import { COMPANY, TESTIMONIALS } from "@/lib/site-content";
 
 const SERVICES_LIST = [
   "Growth Strategy",
@@ -31,11 +32,14 @@ export default function CTASection() {
     setSubmitted(true);
   };
 
+  const t = TESTIMONIALS[0];
+
   return (
     <section id="contact" className="relative py-32 overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-catalyst-base to-catalyst-deep" aria-hidden />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -55,6 +59,7 @@ export default function CTASection() {
         </motion.div>
 
         <div className="grid lg:grid-cols-[1fr_360px] gap-8 max-w-5xl mx-auto">
+          {/* Form */}
           <motion.div
             initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -73,9 +78,9 @@ export default function CTASection() {
               <form onSubmit={handleSubmit} className="glass-card p-8 space-y-5">
                 <div className="grid sm:grid-cols-2 gap-4">
                   {[
-                    { id: "name",    label: "Full Name",    placeholder: "Jane Smith",      type: "text"  },
+                    { id: "name",    label: "Full Name",    placeholder: "Jane Smith",       type: "text"  },
                     { id: "email",   label: "Work Email",   placeholder: "jane@company.com", type: "email" },
-                    { id: "company", label: "Company Name", placeholder: "Acme Ltd",         type: "text"  },
+                    { id: "company", label: "Company Name", placeholder: "Acme Ltd",          type: "text"  },
                   ].map(({ id, label, placeholder, type }) => (
                     <div key={id} className={id === "company" ? "sm:col-span-2" : ""}>
                       <label htmlFor={id} className="block text-[10px] font-semibold uppercase tracking-[0.15em] text-white/25 mb-2">
@@ -94,6 +99,7 @@ export default function CTASection() {
                   ))}
                 </div>
 
+                {/* Service selector */}
                 <div>
                   <p className="text-[10px] font-semibold uppercase tracking-[0.15em] text-white/25 mb-3">
                     Services of Interest
@@ -146,6 +152,7 @@ export default function CTASection() {
             )}
           </motion.div>
 
+          {/* Contact info */}
           <motion.div
             initial={{ opacity: 0, x: 40 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -154,29 +161,36 @@ export default function CTASection() {
             className="flex flex-col gap-4"
           >
             {[
-              { icon: Phone, label: "Call Us",  value: "+44 (0) 20 7946 0321" },
-              { icon: Mail,  label: "Email",    value: "advisory@catalyst.co.uk" },
-              { icon: MapPin,label: "Office",   value: "Canary Wharf, London" },
-            ].map(({ icon: Icon, label, value }) => (
+              { icon: Phone, label: "Call Us", value: COMPANY.phone, href: `tel:${COMPANY.phone.replace(/\s/g, "")}` },
+              { icon: Mail,  label: "Email",   value: COMPANY.email, href: `mailto:${COMPANY.email}`                },
+              { icon: MapPin,label: "Office",  value: COMPANY.office, href: undefined                               },
+            ].map(({ icon: Icon, label, value, href }) => (
               <div key={label} className="glass-card p-5 flex items-center gap-4">
                 <div className="w-9 h-9 rounded-xl bg-white/[0.04] border border-white/[0.06] flex items-center justify-center shrink-0">
                   <Icon size={14} className="text-accent-500" />
                 </div>
                 <div>
                   <p className="text-[10px] text-white/25 uppercase tracking-[0.15em]">{label}</p>
-                  <p className="text-[13px] font-medium text-white/70 mt-0.5">{value}</p>
+                  {href ? (
+                    <a href={href} className="text-[13px] font-medium text-white/70 mt-0.5 hover:text-accent-400 transition-colors">
+                      {value}
+                    </a>
+                  ) : (
+                    <p className="text-[13px] font-medium text-white/70 mt-0.5">{value}</p>
+                  )}
                 </div>
               </div>
             ))}
 
+            {/* Guarantee */}
             <div className="glass-card p-6">
               <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-accent-600 mb-3">Our Guarantee</p>
               <p className="text-[13px] text-white/30 leading-relaxed">
-                If we don&apos;t identify at least three actionable growth opportunities in our
-                first session, the call is on us — no obligations, no pressure.
+                {COMPANY.guarantee}
               </p>
             </div>
 
+            {/* Testimonial */}
             <div className="glass-card p-6">
               <div className="flex gap-1 mb-3">
                 {Array.from({ length: 5 }).map((_, i) => (
@@ -184,16 +198,15 @@ export default function CTASection() {
                 ))}
               </div>
               <p className="text-[12px] text-white/25 italic leading-relaxed mb-4">
-                &quot;Catalyst identified a pricing flaw costing us £180K/yr in the first week.
-                Six months later we&apos;d tripled MRR and closed our Series A.&quot;
+                {t.quote}
               </p>
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 rounded-full bg-accent-400/10 border border-accent-400/15 flex items-center justify-center text-[11px] font-bold text-accent-500">
-                  SK
+                  {t.initials}
                 </div>
                 <div>
-                  <p className="text-[12px] font-medium text-white/60">Sarah K.</p>
-                  <p className="text-[11px] text-white/25">CEO, FlowStack (Series A, £4M)</p>
+                  <p className="text-[12px] font-medium text-white/60">{t.name}</p>
+                  <p className="text-[11px] text-white/25">{t.role}</p>
                 </div>
               </div>
             </div>

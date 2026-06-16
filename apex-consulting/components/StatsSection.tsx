@@ -2,13 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-
-const STATS = [
-  { value: 340,  suffix: "%", label: "Average revenue growth within 12 months",   prefix: "+" },
-  { value: 127,  suffix: "+", label: "Startups and SMEs advised across Europe",    prefix: ""  },
-  { value: 30,   suffix: "d", label: "Time to first measurable result",             prefix: ""  },
-  { value: 4.9,  suffix: "",  label: "Average client satisfaction score out of 5", prefix: ""  },
-];
+import { STATS } from "@/lib/site-content";
 
 function CountUp({ target, prefix, suffix, trigger }: {
   target: number; prefix: string; suffix: string; trigger: boolean;
@@ -56,7 +50,7 @@ export default function StatsSection() {
   return (
     <section id="results" className="relative py-24 overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-r from-white/[0.02] via-transparent to-white/[0.02]" aria-hidden />
-      <div className="absolute inset-0 border-y border-white/[0.04]" aria-hidden />
+      <div className="absolute inset-0 border-y border-white/[0.05]" aria-hidden />
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8" ref={ref}>
         <motion.div
@@ -66,8 +60,8 @@ export default function StatsSection() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-accent-600 mb-4">By the Numbers</p>
-          <h2 className="text-[clamp(1.8rem,4vw,3rem)] font-black tracking-[-0.03em] text-white/85">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent-400 mb-4">By the Numbers</p>
+          <h2 className="text-[clamp(1.8rem,4vw,3rem)] font-black tracking-[-0.03em] text-white">
             The evidence speaks for itself.
           </h2>
         </motion.div>
@@ -85,7 +79,7 @@ export default function StatsSection() {
               <div className="text-[clamp(3rem,6vw,5rem)] font-black tracking-tight leading-none accent-shimmer mb-3">
                 <CountUp target={value} prefix={prefix} suffix={suffix} trigger={triggered} />
               </div>
-              <p className="text-[12px] text-white/25 leading-relaxed max-w-[160px] mx-auto font-light">{label}</p>
+              <p className="text-[13px] text-stone-500 leading-relaxed max-w-[160px] mx-auto">{label}</p>
             </motion.div>
           ))}
         </div>

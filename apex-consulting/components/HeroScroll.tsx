@@ -2,23 +2,12 @@
 
 import { ContainerScroll } from "@/components/ui/container-scroll-animation";
 import { TrendingUp, TrendingDown, Activity, BarChart2, ArrowUpRight } from "lucide-react";
-
-const METRICS = [
-  { label: "MRR",        value: "£108K", delta: "+23%",  up: true  },
-  { label: "CAC",        value: "£412",  delta: "-8%",   up: false },
-  { label: "Net Margin", value: "56.4%",  delta: "+14pp", up: true  },
-  { label: "Runway",     value: "18 mo",  delta: "Safe",  up: true  },
-];
-
-const SPARKLINE = [30, 45, 38, 55, 49, 68, 72, 80, 76, 95, 88, 108];
-
-const PIPELINE = [
-  { stage: "Awareness",   pct: 100, count: 840 },
-  { stage: "Qualified",   pct: 62,  count: 521 },
-  { stage: "Proposal",    pct: 34,  count: 285 },
-  { stage: "Negotiation", pct: 18,  count: 151 },
-  { stage: "Closed Won",  pct: 9,   count: 76  },
-];
+import {
+  DASHBOARD_METRICS,
+  DASHBOARD_SPARKLINE,
+  DASHBOARD_PIPELINE,
+  DASHBOARD_INSIGHT,
+} from "@/lib/site-content";
 
 export default function HeroScroll() {
   return (
@@ -35,7 +24,6 @@ export default function HeroScroll() {
         </div>
       }
     >
-      {/* Dashboard mockup */}
       <div className="h-full w-full p-4 md:p-6 flex flex-col gap-4 bg-catalyst-surface select-none">
 
         {/* Top bar */}
@@ -52,7 +40,7 @@ export default function HeroScroll() {
 
         {/* KPI row */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-          {METRICS.map(({ label, value, delta, up }) => (
+          {DASHBOARD_METRICS.map(({ label, value, delta, up }) => (
             <div key={label} className="rounded-xl bg-white/[0.04] border border-white/[0.06] p-3">
               <p className="text-[10px] text-white/30 mb-1 tracking-wide">{label}</p>
               <p className="text-[18px] font-black text-white/85 leading-none">{value}</p>
@@ -77,18 +65,18 @@ export default function HeroScroll() {
               </div>
             </div>
             <div className="flex-1 flex items-end gap-1">
-              {SPARKLINE.map((h, i) => {
-                const maxH = Math.max(...SPARKLINE);
+              {DASHBOARD_SPARKLINE.map((h, i) => {
+                const maxH = Math.max(...DASHBOARD_SPARKLINE);
                 return (
                   <div
                     key={i}
-                    className="flex-1 rounded-sm"
+                    className="flex-1 rounded-sm transition-all"
                     style={{
                       height: `${(h / maxH) * 100}%`,
                       background:
-                        i === SPARKLINE.length - 1
+                        i === DASHBOARD_SPARKLINE.length - 1
                           ? "rgba(208,201,188,0.7)"
-                          : `rgba(208,201,188,${0.08 + (i / SPARKLINE.length) * 0.18})`,
+                          : `rgba(208,201,188,${0.08 + (i / DASHBOARD_SPARKLINE.length) * 0.18})`,
                     }}
                   />
                 );
@@ -107,7 +95,7 @@ export default function HeroScroll() {
               <BarChart2 size={12} className="text-white/20" />
             </div>
             <div className="flex flex-col gap-2 flex-1 justify-center">
-              {PIPELINE.map(({ stage, pct, count }) => (
+              {DASHBOARD_PIPELINE.map(({ stage, pct, count }) => (
                 <div key={stage} className="flex items-center gap-3">
                   <span className="text-[10px] text-white/25 w-20 shrink-0">{stage}</span>
                   <div className="flex-1 h-1.5 bg-white/[0.05] rounded-full overflow-hidden">
@@ -128,7 +116,7 @@ export default function HeroScroll() {
           <TrendingUp size={12} className="text-accent-500 shrink-0" />
           <p className="text-[11px] text-white/35 leading-relaxed">
             <span className="text-accent-400 font-semibold">AI Insight: </span>
-            December MRR spike driven by Q4 enterprise deals — retention programme needed to sustain growth trajectory.
+            {DASHBOARD_INSIGHT}
           </p>
         </div>
       </div>
