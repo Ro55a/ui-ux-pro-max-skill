@@ -1,171 +1,137 @@
 "use client";
 
 import { ContainerScroll } from "@/components/ui/container-scroll-animation";
-import { motion } from "framer-motion";
-import { ArrowRight, TrendingUp, TrendingDown, Activity, BarChart2 } from "lucide-react";
-import { HERO, COMPANY, LEGAL } from "@/content/site.config";
+import { TrendingUp, TrendingDown, Activity, BarChart2, ArrowUpRight } from "lucide-react";
 
-const BARS   = [38, 52, 44, 61, 55, 73, 68, 82, 79, 94, 88, 100];
-const MONTHS = ["J","F","M","A","M","J","J","A","S","O","N","D"];
-
-const KPI = [
-  { label: "Revenue",  value: "+127%", up: true  },
-  { label: "Margin",   value: "43.2%", up: true  },
-  { label: "Burn",     value: "0.47×", up: false },
-  { label: "CAC Eff.", value: "+40%",  up: true  },
+const METRICS = [
+  { label: "MRR",        value: "£108K", delta: "+23%",  up: true  },
+  { label: "CAC",        value: "£412",  delta: "-8%",   up: false },
+  { label: "Net Margin", value: "56.4%",  delta: "+14pp", up: true  },
+  { label: "Runway",     value: "18 mo",  delta: "Safe",  up: true  },
 ];
 
-const FEED = [
-  { dot: "bg-emerald-400", text: "Financial analysis complete — 3 opportunities flagged" },
-  { dot: "bg-accent-400",  text: "Competitor pricing update detected in your sector"      },
-  { dot: "bg-blue-400",    text: "Q3 market research report ready for review"             },
-  { dot: "bg-emerald-400", text: "Cash-flow forecast updated with actuals"                },
+const SPARKLINE = [30, 45, 38, 55, 49, 68, 72, 80, 76, 95, 88, 108];
+
+const PIPELINE = [
+  { stage: "Awareness",   pct: 100, count: 840 },
+  { stage: "Qualified",   pct: 62,  count: 521 },
+  { stage: "Proposal",    pct: 34,  count: 285 },
+  { stage: "Negotiation", pct: 18,  count: 151 },
+  { stage: "Closed Won",  pct: 9,   count: 76  },
 ];
-
-function DashboardMockup() {
-  return (
-    <div className="h-full w-full bg-catalyst-base rounded-xl flex flex-col p-4 md:p-6 gap-4 select-none">
-      {/* Top bar */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <div className="w-6 h-6 rounded-md bg-gradient-to-br from-accent-700 to-accent-400 flex items-center justify-center">
-            <span className="text-[9px] font-black text-catalyst-deep">C</span>
-          </div>
-          <span className="text-[12px] font-semibold text-white">{COMPANY.brandName} — Client Portal</span>
-        </div>
-        <div className="flex items-center gap-1.5">
-          <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-          <span className="text-[10px] text-stone-500">Live</span>
-        </div>
-      </div>
-
-      {/* KPI row */}
-      <div className="grid grid-cols-4 gap-2">
-        {KPI.map(({ label, value, up }) => (
-          <div key={label} className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-3">
-            <p className="text-[9px] text-stone-600 mb-1">{label}</p>
-            <p className="text-[13px] font-bold text-white">{value}</p>
-            <div className="flex items-center gap-1 mt-1">
-              {up
-                ? <TrendingUp   size={9} className="text-emerald-400" />
-                : <TrendingDown size={9} className="text-red-400" />
-              }
-              <span className={`text-[9px] font-medium ${up ? "text-emerald-400" : "text-red-400"}`}>
-                {up ? "Above target" : "Review needed"}
-              </span>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {/* Chart + feed */}
-      <div className="flex-1 grid grid-cols-[1fr_180px] md:grid-cols-[1fr_220px] gap-3 min-h-0">
-        <div className="rounded-xl bg-white/[0.02] border border-white/[0.05] p-4 flex flex-col">
-          <div className="flex items-center justify-between mb-3">
-            <div>
-              <p className="text-[10px] text-stone-500">Revenue vs Target</p>
-              <p className="text-[13px] font-semibold text-white mt-0.5">FY 2025 — All Clients</p>
-            </div>
-            <BarChart2 size={14} className="text-stone-600" />
-          </div>
-          <div className="flex-1 flex items-end gap-1.5">
-            {BARS.map((h, i) => (
-              <div key={i} className="flex-1 flex flex-col items-center gap-1">
-                <div
-                  className="w-full rounded-sm transition-all"
-                  style={{
-                    height: `${h}%`,
-                    background:
-                      i === BARS.length - 1
-                        ? "linear-gradient(180deg,#14B8A6,#0F766E)"
-                        : `rgba(20,184,166,${0.15 + (i / BARS.length) * 0.4})`,
-                  }}
-                />
-                <span className="text-[7px] text-stone-700">{MONTHS[i]}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="rounded-xl bg-white/[0.02] border border-white/[0.05] p-4 flex flex-col gap-3">
-          <div className="flex items-center gap-2 mb-1">
-            <Activity size={11} className="text-stone-600" />
-            <p className="text-[10px] text-stone-500">Activity</p>
-          </div>
-          {FEED.map(({ dot, text }, i) => (
-            <div key={i} className="flex gap-2.5">
-              <div className={`w-1.5 h-1.5 rounded-full ${dot} mt-1 shrink-0`} />
-              <p className="text-[10px] text-stone-500 leading-relaxed">{text}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function TitleBlock() {
-  return (
-    <div className="space-y-6">
-      <motion.p
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-        className="text-[11px] font-semibold uppercase tracking-[0.22em] text-accent-400"
-      >
-        {HERO.eyebrow}
-      </motion.p>
-
-      <motion.h1
-        initial={{ opacity: 0, y: 24 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.75, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-        className="text-[clamp(2.8rem,6vw,5.5rem)] font-black leading-[0.93] tracking-[-0.04em] text-white"
-      >
-        {HERO.headlineLines.map((line, i) => (
-          <span key={i} className="block">
-            {i === 0 ? <span className="accent-shimmer">{line}</span> : line}
-          </span>
-        ))}
-      </motion.h1>
-
-      <motion.p
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.65, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
-        className="text-[1rem] text-stone-400 leading-relaxed max-w-lg mx-auto"
-      >
-        {HERO.subheadline}
-      </motion.p>
-
-      <motion.div
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.48, ease: [0.16, 1, 0.3, 1] }}
-        className="flex flex-wrap gap-3 justify-center"
-      >
-        <a href={LEGAL.bookingUrl} className="btn-accent flex items-center gap-2 text-[14px]">
-          {HERO.primaryCta} <ArrowRight size={14} />
-        </a>
-        <a href="#services" className="btn-ghost text-[14px]">
-          {HERO.secondaryCta}
-        </a>
-      </motion.div>
-    </div>
-  );
-}
 
 export default function HeroScroll() {
   return (
-    <section className="relative bg-catalyst-deep overflow-hidden pt-16">
-      <div
-        className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[300px] pointer-events-none"
-        style={{ background: "radial-gradient(ellipse at top, rgba(15,118,110,0.1) 0%, transparent 70%)" }}
-        aria-hidden
-      />
-      <ContainerScroll titleComponent={<TitleBlock />}>
-        <DashboardMockup />
-      </ContainerScroll>
-    </section>
+    <ContainerScroll
+      titleComponent={
+        <div className="mb-6">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-accent-600 mb-3">
+            Live Intelligence Platform
+          </p>
+          <h2 className="text-[clamp(2rem,5vw,3.8rem)] font-black tracking-[-0.04em] text-white/90 leading-[1.02]">
+            Your entire business,<br />
+            <span className="accent-shimmer">visible in one view.</span>
+          </h2>
+        </div>
+      }
+    >
+      {/* Dashboard mockup */}
+      <div className="h-full w-full p-4 md:p-6 flex flex-col gap-4 bg-catalyst-surface select-none">
+
+        {/* Top bar */}
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+            <span className="text-[11px] text-white/40 font-medium tracking-wide">Portfolio · Live</span>
+          </div>
+          <div className="flex items-center gap-1.5 text-[11px] text-white/20">
+            <Activity size={11} />
+            <span>Updated just now</span>
+          </div>
+        </div>
+
+        {/* KPI row */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+          {METRICS.map(({ label, value, delta, up }) => (
+            <div key={label} className="rounded-xl bg-white/[0.04] border border-white/[0.06] p-3">
+              <p className="text-[10px] text-white/30 mb-1 tracking-wide">{label}</p>
+              <p className="text-[18px] font-black text-white/85 leading-none">{value}</p>
+              <div className={`flex items-center gap-1 mt-1.5 ${up ? "text-emerald-400" : "text-red-400"}`}>
+                {up ? <TrendingUp size={10} /> : <TrendingDown size={10} />}
+                <span className="text-[10px] font-semibold">{delta}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Charts row */}
+        <div className="grid md:grid-cols-2 gap-3 flex-1 min-h-0">
+
+          {/* Revenue sparkline */}
+          <div className="rounded-xl bg-white/[0.03] border border-white/[0.05] p-4 flex flex-col">
+            <div className="flex items-center justify-between mb-3">
+              <p className="text-[11px] text-white/35 font-medium tracking-wide">Revenue Trend</p>
+              <div className="flex items-center gap-1 text-accent-400 text-[10px] font-semibold">
+                <span>+127% YoY</span>
+                <ArrowUpRight size={10} />
+              </div>
+            </div>
+            <div className="flex-1 flex items-end gap-1">
+              {SPARKLINE.map((h, i) => {
+                const maxH = Math.max(...SPARKLINE);
+                return (
+                  <div
+                    key={i}
+                    className="flex-1 rounded-sm"
+                    style={{
+                      height: `${(h / maxH) * 100}%`,
+                      background:
+                        i === SPARKLINE.length - 1
+                          ? "rgba(208,201,188,0.7)"
+                          : `rgba(208,201,188,${0.08 + (i / SPARKLINE.length) * 0.18})`,
+                    }}
+                  />
+                );
+              })}
+            </div>
+            <div className="flex justify-between mt-2">
+              <span className="text-[9px] text-white/15">Jan</span>
+              <span className="text-[9px] text-white/15">Dec</span>
+            </div>
+          </div>
+
+          {/* Sales pipeline */}
+          <div className="rounded-xl bg-white/[0.03] border border-white/[0.05] p-4 flex flex-col">
+            <div className="flex items-center justify-between mb-3">
+              <p className="text-[11px] text-white/35 font-medium tracking-wide">Sales Pipeline</p>
+              <BarChart2 size={12} className="text-white/20" />
+            </div>
+            <div className="flex flex-col gap-2 flex-1 justify-center">
+              {PIPELINE.map(({ stage, pct, count }) => (
+                <div key={stage} className="flex items-center gap-3">
+                  <span className="text-[10px] text-white/25 w-20 shrink-0">{stage}</span>
+                  <div className="flex-1 h-1.5 bg-white/[0.05] rounded-full overflow-hidden">
+                    <div
+                      className="h-full rounded-full bg-gradient-to-r from-accent-700/60 to-accent-400/70"
+                      style={{ width: `${pct}%` }}
+                    />
+                  </div>
+                  <span className="text-[10px] text-white/20 w-8 text-right">{count}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom insight strip */}
+        <div className="rounded-xl bg-accent-400/[0.05] border border-accent-400/[0.1] px-4 py-2.5 flex items-center gap-3">
+          <TrendingUp size={12} className="text-accent-500 shrink-0" />
+          <p className="text-[11px] text-white/35 leading-relaxed">
+            <span className="text-accent-400 font-semibold">AI Insight: </span>
+            December MRR spike driven by Q4 enterprise deals — retention programme needed to sustain growth trajectory.
+          </p>
+        </div>
+      </div>
+    </ContainerScroll>
   );
 }

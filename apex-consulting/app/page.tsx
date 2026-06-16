@@ -1,5 +1,6 @@
 import Navigation           from "@/components/Navigation";
 import HeroSection          from "@/components/HeroSection";
+import HeroScroll           from "@/components/HeroScroll";
 import DisplayCards         from "@/components/DisplayCards";
 import ServicesSection      from "@/components/ServicesSection";
 import FinancialAnalyzer    from "@/components/FinancialAnalyzer";
@@ -15,6 +16,7 @@ export default function Home() {
       <Navigation />
       {/* Home */}
       <HeroSection />
+      <HeroScroll />
       <DisplayCards />
       {/* #services */}
       <ServicesSection />
